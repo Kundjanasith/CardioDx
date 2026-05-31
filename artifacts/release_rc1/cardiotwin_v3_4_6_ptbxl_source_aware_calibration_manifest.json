@@ -1,0 +1,231 @@
+{
+  "project": "CardioTwin-AI",
+  "version": "v3.4.6 PTB-XL Source-aware Calibration Addendum Pack",
+  "created_at_utc": "2026-05-31T11:38:09.003637+00:00",
+  "summary": {
+    "project": "CardioTwin-AI",
+    "version": "v3.4.6 PTB-XL source-aware calibration addendum",
+    "created_at_utc": "2026-05-31T11:38:09.001234+00:00",
+    "scope": "PTB-XL standalone source-controlled benchmark addendum to frozen v3.3.5 public validation release.",
+    "ptbxl_readiness": {
+      "readiness": "ready_candidate",
+      "metadata_rows": 21799,
+      "hr_waveform_ready_rows": 21799,
+      "label_mapped_rows": 21388,
+      "label_counts": {
+        "NORM": 9514,
+        "MI": 5469,
+        "STTC": 5235,
+        "CD": 4898,
+        "HYP": 2649
+      }
+    },
+    "cohorts": {
+      "fold9_calibration": {
+        "path": "artifacts/public_multicenter_validation_v34/ptbxl_calibration_fold9_cohort_v342.csv",
+        "rows": 2146,
+        "unique_patients": 1917,
+        "label_counts": {
+          "NORM": 955,
+          "MI": 540,
+          "STTC": 528,
+          "CD": 495,
+          "HYP": 268
+        },
+        "sha256": "1b947202384736f0e22a2f15a34468fe88c1c2324fd5946cff6f0c5ed9f23d42"
+      },
+      "fold10_locked_eval": {
+        "path": "artifacts/public_multicenter_validation_v34/ptbxl_locked_eval_fold10_cohort_v342.csv",
+        "rows": 2158,
+        "unique_patients": 1877,
+        "label_counts": {
+          "NORM": 963,
+          "MI": 550,
+          "STTC": 521,
+          "CD": 496,
+          "HYP": 262
+        },
+        "sha256": "3e28a358b11bd1d68b8a2eec85b7ae85a018f761939d8c66057366bff4ac9596"
+      },
+      "fold10_balanced_smoke_subset": {
+        "path": "artifacts/public_multicenter_validation_v34/ptbxl_balanced_smoke_subset_v342.csv",
+        "rows": 235,
+        "unique_patients": 218,
+        "label_counts": {
+          "NORM": 66,
+          "MI": 67,
+          "STTC": 78,
+          "CD": 66,
+          "HYP": 60
+        },
+        "sha256": "c1633916e4bd9d446656fe7cb661a78cd9e7873dbe98bc6a64edb175d94f1c04"
+      }
+    },
+    "inference": {
+      "smoke": {
+        "records_requested": 235,
+        "ok_count": 235,
+        "error_count": 0,
+        "status": "pass"
+      },
+      "fold9_calibration": {
+        "records_requested": 2146,
+        "ok_count": 2146,
+        "error_count": 0,
+        "status": "pass"
+      },
+      "fold10_locked_eval": {
+        "records_requested": 2158,
+        "ok_count": 2158,
+        "error_count": 0,
+        "status": "pass"
+      }
+    },
+    "key_metrics": {
+      "fold10_runtime_screening": {
+        "split": "fold10_runtime_screening",
+        "macro_auroc": 0.8840655307419931,
+        "macro_auprc": 0.7313501038399431,
+        "macro_f1": 0.5814457423805688,
+        "macro_precision": 0.45506807017830864,
+        "macro_sensitivity": 0.9106315673518864,
+        "macro_specificity": 0.5973912412279443,
+        "macro_accuracy": 0.6721964782205746,
+        "labels_with_valid_auroc": 5
+      },
+      "fold10_apply_fold9_best_f1": {
+        "split": "fold10_apply_fold9_best_f1",
+        "macro_auroc": 0.8840655307419931,
+        "macro_auprc": 0.7313501038399431,
+        "macro_f1": 0.6773663026278848,
+        "macro_precision": 0.6446362519975846,
+        "macro_sensitivity": 0.7138557948454038,
+        "macro_specificity": 0.8715140979874414,
+        "macro_accuracy": 0.845690454124189,
+        "labels_with_valid_auroc": 5
+      },
+      "fold10_apply_fold9_sensitivity90_max_specificity": {
+        "split": "fold10_apply_fold9_sensitivity90_max_specificity",
+        "macro_auroc": 0.8840655307419931,
+        "macro_auprc": 0.7313501038399431,
+        "macro_f1": 0.6139544436862824,
+        "macro_precision": 0.4913253202746171,
+        "macro_sensitivity": 0.8926916394625979,
+        "macro_specificity": 0.6829833327639918,
+        "macro_accuracy": 0.7303058387395737,
+        "labels_with_valid_auroc": 5
+      }
+    },
+    "interpretation": {
+      "main_result": "PTB-XL fold 10 achieved strong discrimination under the frozen runtime, with macro AUROC 0.8841 and macro AUPRC 0.7314.",
+      "calibration_result": "Fold-9-derived best-F1 thresholds improved fold-10 macro F1, precision, specificity, and accuracy compared with runtime screening thresholds, while reducing sensitivity as expected.",
+      "screening_result": "Runtime screening thresholds preserved high sensitivity but produced more false positives, consistent with screening-mode behavior."
+    },
+    "safe_claim": "CardioTwin-AI v3.4 adds PTB-XL source-controlled benchmarking with fold 9 used for calibration and fold 10 used as locked evaluation. The frozen runtime showed strong fold-10 discrimination, and fold-9-derived thresholds improved specificity and F1 without retraining.",
+    "claim_boundary": "PTB-XL v3.4.6 is a source-controlled benchmark and calibration addendum. It is not prospective clinical validation, not final diagnosis, and not clinical deployment."
+  },
+  "files_indexed": 20,
+  "files": [
+    {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_source_aware_calibration_addendum_summary_v346.json",
+      "size_bytes": 4672,
+      "sha256": "85c3ead21fb2ecc1ee49526209186e0871588cfbdab69e715be0e15a4c7cafcd"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/PTBXL_SOURCE_AWARE_CALIBRATION_ADDENDUM_v346.md",
+      "size_bytes": 2216,
+      "sha256": "0e874a13deb0b2ab1416c5b5da1ead249bc78563c92e04bf469a81151c8f2860"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_source_aware_calibration_addendum_v346.html",
+      "size_bytes": 2494,
+      "sha256": "eaae13fc7fa757b096445ddd5dd91b08af130483040624a8a54b1fe9defc58c8"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/V34_SOURCE_AWARE_CALIBRATION_PROTOCOL.md",
+      "size_bytes": 1296,
+      "sha256": "72faa5ce0974cff4e1b44e594668499608ef6c64c88f055784e6f218fa08c7d0"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_readiness_v341.json",
+      "size_bytes": 2221,
+      "sha256": "40f3c15b5ac1f4afa47e6291904b6dd56bb04079c68fa2c3d1031b0400197b32"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/PTBXL_READINESS_REPORT_v341.md",
+      "size_bytes": 643,
+      "sha256": "000d95222f9897ce8bf5163e4e986e51091f75ab39d6fbb405c75c3330044f7f"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_locked_cohort_summary_v342.json",
+      "size_bytes": 2766,
+      "sha256": "ef6fa6489aa0a9da4f1668de1233abc706f2612531a672038f12b2d0323801d8"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/PTBXL_LOCKED_COHORT_PROTOCOL_v342.md",
+      "size_bytes": 1161,
+      "sha256": "9b8bcec53b10b45eef5b5e8c76e9a8f0b9a29c4a8fa711f85f8c29038a810407"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_smoke_inference_summary_v343.json",
+      "size_bytes": 1419,
+      "sha256": "08cc42179611ffe3f3d0562e5da2b081990e78e877396c7eb574051414d5945f"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/PTBXL_SMOKE_INFERENCE_REPORT_v343.md",
+      "size_bytes": 534,
+      "sha256": "67ac49b252f46e3d96e71e62ccfcdcceab08cdea5566622d7ed84a8ac22cb482"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_fold10_locked_inference_summary_v344.json",
+      "size_bytes": 1444,
+      "sha256": "733644c6317c1c357c216eb727882d7dcba6762ad03ce03d5852f8e3e687f316"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/PTBXL_FOLD10_LOCKED_INFERENCE_REPORT_v344.md",
+      "size_bytes": 545,
+      "sha256": "2eb5624a4815e9d1becae4c898d5e4fc9f9b24ff00cba8fcdb0c38eb55258a1d"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_fold9_calibration_inference_summary_v345.json",
+      "size_bytes": 1454,
+      "sha256": "3faa429e0f80fd9284179352b62f0ebb96e26285516bc657e76a4b95318bd738"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/PTBXL_FOLD9_CALIBRATION_INFERENCE_REPORT_v345.md",
+      "size_bytes": 554,
+      "sha256": "e3a5811331f9a538053119a80165c273d02ea0e2072f87838713d15d96c6639c"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_metrics_calibration_summary_v345.json",
+      "size_bytes": 4545,
+      "sha256": "8348d2738d917134a4836c9fd3d9b634817ddf85029e58cda8786690a24f80ec"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_fold10_metrics_and_calibration_v345.csv",
+      "size_bytes": 8820,
+      "sha256": "18e66e27ec47420e3cc2e58ece79958f713154360c4a2484aa15b115ca0003a0"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_fold9_threshold_picks_v345.json",
+      "size_bytes": 7658,
+      "sha256": "21bf7ba286b3024c7b580584f31f4d96ae730f939a8b04f183ee41666e57dcb7"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_fold9_threshold_curves_v345.csv",
+      "size_bytes": 149230,
+      "sha256": "3dd86a5ec8df9277fe64c56b623bc479dfcb5ba4764fefba777efec0c2046901"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/PTBXL_METRICS_CALIBRATION_REPORT_v345.md",
+      "size_bytes": 2628,
+      "sha256": "6911377ae30a4ac3fdcdb2ff899469e4a5b0c68697c20b2015483f8112773836"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_metrics_calibration_report_v345.html",
+      "size_bytes": 21048,
+      "sha256": "55c299f4dd9f30c3b00dfefec249168b7152e63a2772f929688c2480417baaee"
+    }
+  ],
+  "claim_boundary": "PTB-XL v3.4.6 is a source-controlled benchmark and calibration addendum. It is not prospective clinical validation, not final diagnosis, and not clinical deployment."
+}

@@ -1,0 +1,8 @@
+project: CardioTwin-AI 12L
+sampling_rate: 100
+input_duration_sec: 10
+classes: [NORM, MI, STTC, CD, HYP]
+lead_order: [I, II, III, aVR, aVL, aVF, V1, V2, V3, V4, V5, V6]
+signal_quality_threshold: 0.55
+prediction_threshold: 0.5
+clinical_boundary: Research-use only; not final diagnosis.

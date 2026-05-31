@@ -1,0 +1,37 @@
+﻿# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+*.egg-info/
+
+# Local data - do not push ECG datasets
+data/raw/
+data/processed/
+data/interim/
+*.part
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Secrets
+.env
+*.pem
+*.key
+credentials*
+token*
+secrets*
+
+# Avoid accidental huge generated temporary files
+artifacts/**/*.tmp
+artifacts/**/*.part

@@ -1,0 +1,67 @@
+{
+  "project": "CardioTwin-AI",
+  "version": "v3.4.2 PTB-XL locked cohort builder",
+  "created_at_utc": "2026-05-31T11:07:11.373899+00:00",
+  "input_index_csv": "artifacts/public_multicenter_validation_v34/ptbxl_record_index_v341.csv",
+  "input_index_sha256": "b9e51a24412b60b02478a3589eac9f3e7805e8a166b3b89195bfdc6237a8d2f3",
+  "input_readiness_json": "artifacts/public_multicenter_validation_v34/ptbxl_readiness_v341.json",
+  "input_readiness_sha256": "40f3c15b5ac1f4afa47e6291904b6dd56bb04079c68fa2c3d1031b0400197b32",
+  "source_dataset": "PTB-XL standalone",
+  "readiness_status": "ready_candidate",
+  "cohorts": {
+    "fold9_calibration": {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_calibration_fold9_cohort_v342.csv",
+      "rows": 2146,
+      "unique_patients": 1917,
+      "label_counts": {
+        "NORM": 955,
+        "MI": 540,
+        "STTC": 528,
+        "CD": 495,
+        "HYP": 268
+      },
+      "sha256": "1b947202384736f0e22a2f15a34468fe88c1c2324fd5946cff6f0c5ed9f23d42"
+    },
+    "fold10_locked_eval": {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_locked_eval_fold10_cohort_v342.csv",
+      "rows": 2158,
+      "unique_patients": 1877,
+      "label_counts": {
+        "NORM": 963,
+        "MI": 550,
+        "STTC": 521,
+        "CD": 496,
+        "HYP": 262
+      },
+      "sha256": "3e28a358b11bd1d68b8a2eec85b7ae85a018f761939d8c66057366bff4ac9596"
+    },
+    "fold10_balanced_smoke_subset": {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_balanced_smoke_subset_v342.csv",
+      "rows": 235,
+      "unique_patients": 218,
+      "label_counts": {
+        "NORM": 66,
+        "MI": 67,
+        "STTC": 78,
+        "CD": 66,
+        "HYP": 60
+      },
+      "sha256": "c1633916e4bd9d446656fe7cb661a78cd9e7873dbe98bc6a64edb175d94f1c04"
+    }
+  },
+  "runtime_input": {
+    "preferred_waveform": "filename_hr / records500",
+    "sampling_rate_expected": "500 Hz",
+    "duration_expected": "10 seconds",
+    "reason": "Frozen runtime bridge expects high-resolution 12-lead ECG input when available."
+  },
+  "rules": [
+    "Use fold 9 only for calibration/threshold analysis.",
+    "Use fold 10 as locked evaluation cohort.",
+    "Do not train or tune the model on fold 10.",
+    "Do not modify v3.3.5 frozen evidence.",
+    "Report PTB-XL as source-controlled benchmark if PTB-XL influenced earlier model development.",
+    "Do not claim PTB-XL as fully unseen external hospital validation unless provenance confirms no development exposure."
+  ],
+  "claim_boundary": "PTB-XL v3.4.2 cohorts are for source-controlled benchmark and source-aware calibration only. Not clinical deployment and not prospective validation."
+}

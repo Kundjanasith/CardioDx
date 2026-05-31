@@ -1,0 +1,807 @@
+﻿from pathlib import Path
+import argparse
+import csv
+import json
+import re
+import zipfile
+import hashlib
+from datetime import datetime, timezone
+from collections import Counter, defaultdict
+
+ROOT = Path(".")
+ART = ROOT / "artifacts"
+OUT = ART / "public_multicenter_validation_v32"
+RELEASE = ART / "release_rc1"
+OUT.mkdir(parents=True, exist_ok=True)
+RELEASE.mkdir(parents=True, exist_ok=True)
+
+TARGET_CLASSES = ["NORM", "MI", "STTC", "CD", "HYP"]
+
+SOURCE_SPECS = [
+    {
+        "source_id": "cpsc_2018",
+        "role": "public_multicenter_12lead_core",
+        "claim_role": "CPSC 2018 public source",
+        "roots": [
+            "data/raw/cinc2020/training/cpsc_2018",
+            "data/raw/challenge2021/training/cpsc_2018",
+            "data/raw/challenge-2021/training/cpsc_2018",
+        ],
+    },
+    {
+        "source_id": "cpsc_2018_extra",
+        "role": "external_public_source_shift",
+        "claim_role": "CPSC Extra external/source-shift validation",
+        "roots": [
+            "data/raw/cinc2020/training/cpsc_2018_extra",
+            "data/raw/challenge2021/training/cpsc_2018_extra",
+            "data/raw/challenge-2021/training/cpsc_2018_extra",
+        ],
+    },
+    {
+        "source_id": "st_petersburg_incart",
+        "role": "small_public_stress_source",
+        "claim_role": "INCART small-source stress check",
+        "roots": [
+            "data/raw/cinc2020/training/st_petersburg_incart",
+            "data/raw/challenge2021/training/st_petersburg_incart",
+            "data/raw/challenge-2021/training/st_petersburg_incart",
+        ],
+    },
+    {
+        "source_id": "ptb",
+        "role": "public_benchmark_source",
+        "claim_role": "PTB public benchmark source",
+        "roots": [
+            "data/raw/cinc2020/training/ptb",
+            "data/raw/challenge2021/training/ptb",
+            "data/raw/challenge-2021/training/ptb",
+        ],
+    },
+    {
+        "source_id": "ptb_xl_challenge",
+        "role": "paper_ready_benchmark_source_controlled",
+        "claim_role": "PTB-XL source-controlled benchmark via Challenge data",
+        "roots": [
+            "data/raw/cinc2020/training/ptb-xl",
+            "data/raw/cinc2020/training/ptb_xl",
+            "data/raw/challenge2021/training/ptb-xl",
+            "data/raw/challenge-2021/training/ptb-xl",
+        ],
+    },
+    {
+        "source_id": "ptbxl_standalone",
+        "role": "paper_ready_official_split_benchmark",
+        "claim_role": "PTB-XL standalone official benchmark",
+        "roots": [
+            "data/raw/ptbxl",
+            "data/raw/ptb-xl",
+        ],
+    },
+    {
+        "source_id": "georgia",
+        "role": "locked_external_source_shift",
+        "claim_role": "Georgia/G12EC locked external source-shift validation",
+        "roots": [
+            "data/raw/cinc2020/training/georgia",
+            "data/raw/challenge2021/training/georgia",
+            "data/raw/challenge-2021/training/georgia",
+        ],
+    },
+    {
+        "source_id": "chapman_shaoxing",
+        "role": "large_public_hospital_source_stress",
+        "claim_role": "Chapman-Shaoxing large-scale public hospital-source stress validation",
+        "roots": [
+            "data/raw/cinc2020/training/chapman_shaoxing",
+            "data/raw/cinc2020/training/chapman-shaoxing",
+            "data/raw/challenge2021/training/chapman_shaoxing",
+            "data/raw/challenge-2021/training/chapman_shaoxing",
+        ],
+    },
+    {
+        "source_id": "ningbo",
+        "role": "large_public_hospital_source_stress",
+        "claim_role": "Ningbo large-scale public hospital-source stress validation",
+        "roots": [
+            "data/raw/cinc2020/training/ningbo",
+            "data/raw/challenge2021/training/ningbo",
+            "data/raw/challenge-2021/training/ningbo",
+        ],
+    },
+    {
+        "source_id": "kaggle_heartbeat",
+        "role": "beatscope_auxiliary_beat_level_evidence",
+        "claim_role": "BeatScope auxiliary beat-level morphology benchmark only",
+        "roots": [
+            "data/raw/kaggle_heartbeat",
+        ],
+    },
+    {
+        "source_id": "mimic_iv_ecg_access_gated",
+        "role": "future_hospital_scale_access_gated_validation",
+        "claim_role": "MIMIC-IV-ECG access-gated future validation plan",
+        "roots": [
+            "data/raw/mimic_iv_ecg",
+        ],
+    },
+]
+
+TERM_RULES = {
+    "NORM": [
+        r"\bnormal\b",
+        r"\bsinus rhythm\b",
+    ],
+    "MI": [
+        r"\bmyocardial infarction\b",
+        r"\binfarct",
+    ],
+    "STTC": [
+        r"\bst[- ]?t\b",
+        r"\bst segment\b",
+        r"\bt wave\b",
+        r"\bischemi",
+        r"\brepolar",
+    ],
+    "CD": [
+        r"\bbundle branch block\b",
+        r"\bconduction\b",
+        r"\bav block\b",
+        r"\brbbb\b",
+        r"\blbbb\b",
+        r"\bfascicular\b",
+    ],
+    "HYP": [
+        r"\bhypertrophy\b",
+        r"\blvh\b",
+        r"\brvh\b",
+    ],
+}
+
+ABBREV_TO_SUPER = {
+    "NORM": "NORM",
+    "NORMAL": "NORM",
+    "MI": "MI",
+    "STTC": "STTC",
+    "ST_T": "STTC",
+    "ST-T": "STTC",
+    "CD": "CD",
+    "HYP": "HYP",
+    "LVH": "HYP",
+    "RVH": "HYP",
+}
+
+# Conservative seed only. If dx_mapping_scored.csv exists, term-based mapping will supersede/extend this.
+SEED_CODE_TO_SUPER = {
+    "164873001": ["NORM"],
+    "426783006": ["NORM"],
+}
+
+def sha256_file(path):
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+def safe_read_text(path, max_bytes=2000000):
+    try:
+        with path.open("rb") as f:
+            data = f.read(max_bytes)
+        return data.decode("utf-8", errors="ignore")
+    except Exception:
+        return ""
+
+def find_existing_roots(paths):
+    out = []
+    for p in paths:
+        pp = Path(p)
+        if pp.exists():
+            out.append(pp)
+    return out
+
+def find_dx_mapping_files():
+    names = []
+    for base in [Path("data/raw"), Path("data"), Path("artifacts")]:
+        if base.exists():
+            names += list(base.rglob("*dx*mapping*.csv"))
+            names += list(base.rglob("*Dx*Mapping*.csv"))
+    return sorted(set(names))
+
+def infer_super_from_term(term, abbrev=""):
+    found = set()
+    a = str(abbrev or "").strip().upper()
+    if a in ABBREV_TO_SUPER:
+        found.add(ABBREV_TO_SUPER[a])
+
+    t = str(term or "").lower()
+    for label, pats in TERM_RULES.items():
+        if any(re.search(p, t, flags=re.IGNORECASE) for p in pats):
+            found.add(label)
+
+    return sorted(found)
+
+def load_code_mapping():
+    code_to_super = defaultdict(set)
+    mapping_sources = []
+
+    # Seed mapping kept for safety.
+    for code, labels in SEED_CODE_TO_SUPER.items():
+        for label in labels:
+            if label in TARGET_CLASSES:
+                code_to_super[str(code)].add(label)
+
+    # Highest-priority project harmonization files, if present.
+    # These were used successfully by earlier external validation scripts.
+    config_candidates = [
+        Path("configs/cinc2020_to_ptbxl_superclass_map_v21.csv"),
+        Path("configs/cinc2020_to_ptbxl_superclass_map.csv"),
+    ]
+
+    for cfg in config_candidates:
+        if cfg.exists():
+            try:
+                with cfg.open("r", encoding="utf-8", errors="ignore", newline="") as f:
+                    reader = csv.DictReader(f)
+                    cols = reader.fieldnames or []
+                    lower = {c.lower().strip(): c for c in cols}
+
+                    code_col = lower.get("code") or lower.get("snomed_code") or lower.get("snomed ct code")
+                    decision_col = lower.get("decision")
+                    cls_col = lower.get("ptbxl_superclass") or lower.get("target_superclass") or lower.get("superclass")
+
+                    if code_col and cls_col:
+                        for row in reader:
+                            code = str(row.get(code_col, "")).strip()
+                            cls = str(row.get(cls_col, "")).strip()
+
+                            decision = "include"
+                            if decision_col:
+                                decision = str(row.get(decision_col, "")).strip().lower()
+
+                            if code and cls in TARGET_CLASSES and decision == "include":
+                                code_to_super[code].add(cls)
+
+                mapping_sources.append(str(cfg))
+            except Exception as e:
+                mapping_sources.append(f"{cfg}:error:{repr(e)}")
+
+    # Public SNOMED mapping files and official dx_mapping files.
+    for p in find_dx_mapping_files():
+        try:
+            with p.open("r", encoding="utf-8", errors="ignore", newline="") as f:
+                reader = csv.DictReader(f)
+                cols = reader.fieldnames or []
+                lower = {c.lower().strip(): c for c in cols}
+
+                code_col = None
+                for key in [
+                    "snomed ct code",
+                    "snomed_ct_code",
+                    "snomedctcode",
+                    "snomed code",
+                    "code",
+                    "dx",
+                    "diagnosis_code",
+                ]:
+                    if key in lower:
+                        code_col = lower[key]
+                        break
+
+                target_col = None
+                for key in [
+                    "target_superclasses",
+                    "target_superclass",
+                    "ptbxl_superclass",
+                    "superclass",
+                ]:
+                    if key in lower:
+                        target_col = lower[key]
+                        break
+
+                term_cols = []
+                for key in [
+                    "dx",
+                    "diagnosis",
+                    "description",
+                    "term",
+                    "diagnostic_class",
+                    "diagnostic_subclass",
+                ]:
+                    if key in lower:
+                        term_cols.append(lower[key])
+
+                abbr_col = None
+                for key in ["abbreviation", "abbr"]:
+                    if key in lower:
+                        abbr_col = lower[key]
+                        break
+
+                for row in reader:
+                    if not code_col:
+                        continue
+
+                    code = str(row.get(code_col, "")).strip()
+                    if not code:
+                        continue
+
+                    labels = set()
+
+                    # Preferred path: use frozen/generated target_superclasses directly.
+                    if target_col:
+                        raw = str(row.get(target_col, "")).strip()
+                        for lab in re.split(r"[|,;/ ]+", raw):
+                            lab = lab.strip()
+                            if lab in TARGET_CLASSES:
+                                labels.add(lab)
+
+                    # Fallback: infer from diagnosis text and abbreviation.
+                    if not labels:
+                        term = " ".join(str(row.get(c, "")) for c in term_cols)
+                        abbr = str(row.get(abbr_col, "")) if abbr_col else ""
+                        for lab in infer_super_from_term(term, abbr):
+                            if lab in TARGET_CLASSES:
+                                labels.add(lab)
+
+                    for lab in labels:
+                        code_to_super[code].add(lab)
+
+            mapping_sources.append(str(p))
+
+        except Exception as e:
+            mapping_sources.append(f"{p}:error:{repr(e)}")
+            continue
+
+    return {k: sorted(v) for k, v in code_to_super.items()}, mapping_sources
+
+
+def parse_hea_header(path):
+    text = safe_read_text(path, max_bytes=50000)
+    lines = text.splitlines()
+    first = lines[0] if lines else ""
+    first_parts = first.split()
+
+    n_sig = None
+    fs = None
+
+    try:
+        if len(first_parts) >= 2:
+            n_sig = int(first_parts[1])
+        if len(first_parts) >= 3:
+            fs = float(first_parts[2].split("/")[0])
+    except Exception:
+        pass
+
+    dx_tokens = []
+    comments = []
+
+    for line in lines:
+        s = line.strip()
+        if s.startswith("#"):
+            comments.append(s)
+            if re.match(r"^#\s*Dx\s*:", s, flags=re.IGNORECASE):
+                rhs = s.split(":", 1)[1]
+                dx_tokens = [x.strip() for x in re.split(r"[,;|]", rhs) if x.strip()]
+
+    return {
+        "record_id": path.stem,
+        "hea_path": str(path),
+        "n_sig": n_sig,
+        "fs": fs,
+        "dx_tokens": dx_tokens,
+        "comments_joined": " ".join(comments[:20])[:1000],
+    }
+
+def map_dx_tokens(tokens, code_to_super):
+    labels = set()
+    unmapped = []
+
+    for tok in tokens:
+        raw = str(tok).strip()
+        key = raw.upper()
+
+        if key in ABBREV_TO_SUPER:
+            labels.add(ABBREV_TO_SUPER[key])
+            continue
+
+        digits = re.sub(r"\D", "", raw)
+        if digits and digits in code_to_super:
+            for lab in code_to_super[digits]:
+                labels.add(lab)
+            continue
+
+        term_labels = infer_super_from_term(raw)
+        if term_labels:
+            for lab in term_labels:
+                labels.add(lab)
+            continue
+
+        if raw:
+            unmapped.append(raw)
+
+    return sorted(labels), unmapped
+
+def scan_source(spec, code_to_super, max_header_scan):
+    roots = find_existing_roots(spec["roots"])
+    hea_files = []
+    mat_files = []
+    dat_files = []
+    csv_files = []
+
+    for r in roots:
+        hea_files += list(r.rglob("*.hea"))
+        mat_files += list(r.rglob("*.mat"))
+        dat_files += list(r.rglob("*.dat"))
+        csv_files += list(r.rglob("*.csv"))
+
+    hea_files = sorted(set(hea_files))
+    mat_files = sorted(set(mat_files))
+    dat_files = sorted(set(dat_files))
+    csv_files = sorted(set(csv_files))
+
+    label_counts = Counter()
+    unmapped_counts = Counter()
+    n12 = 0
+    n_with_dx = 0
+    fs_counts = Counter()
+    sample_records = []
+
+    for i, hp in enumerate(hea_files[:max_header_scan]):
+        h = parse_hea_header(hp)
+        if h["n_sig"] == 12:
+            n12 += 1
+        if h["fs"] is not None:
+            fs_counts[str(h["fs"])] += 1
+        if h["dx_tokens"]:
+            n_with_dx += 1
+
+        labels, unmapped = map_dx_tokens(h["dx_tokens"], code_to_super)
+        for lab in labels:
+            label_counts[lab] += 1
+        for u in unmapped:
+            unmapped_counts[u] += 1
+
+        if len(sample_records) < 25:
+            sample_records.append({
+                "source_id": spec["source_id"],
+                "record_id": h["record_id"],
+                "hea_path": h["hea_path"],
+                "n_sig": h["n_sig"],
+                "fs": h["fs"],
+                "dx_tokens": "|".join(h["dx_tokens"]),
+                "mapped_labels": "|".join(labels),
+            })
+
+    waveform_ready = len(hea_files) > 0 and (len(mat_files) > 0 or len(dat_files) > 0)
+    label_ready = n_with_dx > 0 and sum(label_counts.values()) > 0
+
+    if spec["source_id"] == "kaggle_heartbeat":
+        readiness = "auxiliary_beat_level_ready" if csv_files else "not_ready"
+    elif spec["source_id"] == "mimic_iv_ecg_access_gated":
+        readiness = "access_gated_metadata_or_waveform_present" if (csv_files or hea_files or dat_files) else "access_gated_not_ready"
+    elif waveform_ready and label_ready:
+        readiness = "ready_for_public_locked_validation_candidate"
+    elif waveform_ready and not label_ready:
+        readiness = "waveform_ready_label_mapping_needs_audit"
+    elif not waveform_ready and label_ready:
+        readiness = "labels_found_waveform_missing"
+    else:
+        readiness = "not_ready"
+
+    return {
+        "source_id": spec["source_id"],
+        "role": spec["role"],
+        "claim_role": spec["claim_role"],
+        "existing_roots": [str(x) for x in roots],
+        "counts": {
+            "hea_count": len(hea_files),
+            "mat_count": len(mat_files),
+            "dat_count": len(dat_files),
+            "csv_count": len(csv_files),
+            "headers_scanned": min(len(hea_files), max_header_scan),
+            "headers_with_dx": n_with_dx,
+            "headers_12lead_in_scan": n12,
+        },
+        "waveform_ready": waveform_ready,
+        "label_ready_candidate": label_ready,
+        "readiness": readiness,
+        "label_counts_in_scan": {k: int(label_counts[k]) for k in TARGET_CLASSES},
+        "fs_counts_in_scan": dict(fs_counts),
+        "top_unmapped_dx": dict(unmapped_counts.most_common(30)),
+        "sample_records": sample_records,
+    }
+
+def write_csv(path, rows, fieldnames):
+    with path.open("w", encoding="utf-8", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=fieldnames)
+        w.writeheader()
+        w.writerows(rows)
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--max-header-scan", type=int, default=20000)
+    args = ap.parse_args()
+
+    created = datetime.now(timezone.utc).isoformat()
+    code_to_super, mapping_sources = load_code_mapping()
+
+    source_reports = []
+    all_sample_rows = []
+
+    for spec in SOURCE_SPECS:
+        rep = scan_source(spec, code_to_super, args.max_header_scan)
+        source_reports.append(rep)
+        all_sample_rows += rep["sample_records"]
+
+    readiness_rows = []
+    label_rows = []
+    unmapped_rows = []
+
+    for rep in source_reports:
+        c = rep["counts"]
+        readiness_rows.append({
+            "source_id": rep["source_id"],
+            "role": rep["role"],
+            "claim_role": rep["claim_role"],
+            "readiness": rep["readiness"],
+            "waveform_ready": rep["waveform_ready"],
+            "label_ready_candidate": rep["label_ready_candidate"],
+            "hea_count": c["hea_count"],
+            "mat_count": c["mat_count"],
+            "dat_count": c["dat_count"],
+            "csv_count": c["csv_count"],
+            "headers_scanned": c["headers_scanned"],
+            "headers_with_dx": c["headers_with_dx"],
+            "headers_12lead_in_scan": c["headers_12lead_in_scan"],
+            "existing_roots": " | ".join(rep["existing_roots"]),
+        })
+
+        for lab in TARGET_CLASSES:
+            label_rows.append({
+                "source_id": rep["source_id"],
+                "target_superclass": lab,
+                "count_in_header_scan": rep["label_counts_in_scan"].get(lab, 0),
+                "headers_scanned": c["headers_scanned"],
+            })
+
+        for dx, n in rep["top_unmapped_dx"].items():
+            unmapped_rows.append({
+                "source_id": rep["source_id"],
+                "dx_token": dx,
+                "count_in_header_scan": n,
+            })
+
+    readiness_csv = OUT / "public_dataset_readiness_v32.csv"
+    label_csv = OUT / "public_label_support_v32.csv"
+    unmapped_csv = OUT / "public_unmapped_dx_tokens_v32.csv"
+    samples_csv = OUT / "public_sample_records_v32.csv"
+
+    write_csv(readiness_csv, readiness_rows, [
+        "source_id", "role", "claim_role", "readiness", "waveform_ready", "label_ready_candidate",
+        "hea_count", "mat_count", "dat_count", "csv_count", "headers_scanned", "headers_with_dx",
+        "headers_12lead_in_scan", "existing_roots"
+    ])
+
+    write_csv(label_csv, label_rows, [
+        "source_id", "target_superclass", "count_in_header_scan", "headers_scanned"
+    ])
+
+    write_csv(unmapped_csv, unmapped_rows, [
+        "source_id", "dx_token", "count_in_header_scan"
+    ])
+
+    write_csv(samples_csv, all_sample_rows, [
+        "source_id", "record_id", "hea_path", "n_sig", "fs", "dx_tokens", "mapped_labels"
+    ])
+
+    registry = {
+        "project": "CardioTwin-AI",
+        "version": "v3.2-public public multi-center evidence stack framework",
+        "created_at_utc": created,
+        "purpose": "Create source-separated public ECG evidence stack for label-supported validation without waiting for MIMIC-IV-ECG credentialed access.",
+        "target_classes": TARGET_CLASSES,
+        "do_not_mix_sources": True,
+        "recommended_claim": "CardioTwin-AI was evaluated across multiple public 12-lead ECG sources with locked preprocessing, frozen thresholds, and source-separated reporting.",
+        "disallowed_claims_before_prospective_review": [
+            "clinically validated",
+            "doctor-level diagnosis",
+            "generalizes to every hospital",
+            "MIMIC-IV-ECG validated"
+        ],
+        "mapping_sources_found": mapping_sources,
+        "code_to_superclass_size": len(code_to_super),
+        "sources": source_reports,
+        "outputs": {
+            "readiness_csv": str(readiness_csv),
+            "label_support_csv": str(label_csv),
+            "unmapped_dx_csv": str(unmapped_csv),
+            "sample_records_csv": str(samples_csv),
+        },
+        "claim_boundary": "Public readiness and label harmonization audit only. No model validation metrics computed in this step."
+    }
+
+    registry_json = OUT / "public_dataset_registry_v32.json"
+    registry_json.write_text(json.dumps(registry, indent=2, ensure_ascii=False), encoding="utf-8")
+
+    mimic_status = {}
+    mimic_readiness = Path("artifacts/label_supported_external_validation_v32/full_mimic_waveform_subset_readiness_v325.json")
+    if mimic_readiness.exists():
+        try:
+            mimic_status = json.loads(mimic_readiness.read_text(encoding="utf-8"))
+        except Exception:
+            mimic_status = {}
+
+    mimic_md = OUT / "MIMIC_ACCESS_GATED_STATUS_v32_PUBLIC.md"
+    mimic_md.write_text(f"""# MIMIC-IV-ECG Access-gated Validation Status
+
+Created: {created}
+
+## Status
+
+Full MIMIC-IV-ECG waveform validation is currently access-gated by PhysioNet credentialed access and DUA requirements.
+
+## Prepared Assets
+
+{json.dumps(mimic_status, indent=2, ensure_ascii=False)}
+
+## Interpretation
+
+The MIMIC plan is not discarded. It remains a future hospital-scale validation path.
+
+## Current Public Alternative
+
+Proceed with v3.2-public using public multi-center ECG sources such as CPSC, PTB/PTB-XL, Georgia, Chapman-Shaoxing, Ningbo, and INCART.
+
+## Claim Boundary
+
+MIMIC-IV-ECG is prepared as an access-gated future validation plan, not completed external validation.
+""", encoding="utf-8")
+
+    protocol_md = OUT / "PUBLIC_MULTICENTER_VALIDATION_PROTOCOL_v32.md"
+    protocol_md.write_text(f"""# CardioTwin-AI v3.2-public Public Multi-center Label-supported Validation Protocol
+
+Created: {created}
+
+## Purpose
+
+Use public, reproducible, source-separated ECG datasets to continue label-supported validation while MIMIC-IV-ECG access is blocked.
+
+## Evidence Stack
+
+1. Public multi-center 12-lead ECG validation:
+   - CPSC 2018
+   - CPSC 2018 Extra
+   - Georgia/G12EC
+   - Chapman-Shaoxing
+   - Ningbo
+   - INCART
+   - PTB / PTB-XL
+
+2. PTB-XL benchmark:
+   - Use as official split / source-controlled benchmark if it overlaps with model development.
+
+3. BeatScope auxiliary evidence:
+   - Kaggle ECG Heartbeat remains beat-level morphology evidence only.
+
+4. MIMIC-IV-ECG:
+   - Kept as access-gated future hospital-scale validation.
+
+## Frozen Runtime Rule
+
+Do not change:
+- Model: artifacts/models/inceptiontime_v21_safety.pt
+- Threshold profile: artifacts/deep_safety_v21/threshold_profiles_deep.json
+- Runtime bridge: src/cardiotwin/runtime/v304_real_inference_bridge.py
+
+## Reporting Rule
+
+Report metrics by source. Do not pool all sources as a single random split.
+
+## Outputs from this Step
+
+- public_dataset_registry_v32.json
+- public_dataset_readiness_v32.csv
+- public_label_support_v32.csv
+- public_unmapped_dx_tokens_v32.csv
+- public_sample_records_v32.csv
+
+## Next Step
+
+v3.3-public:
+Run locked inference per source and compute source-separated AUROC, AUPRC, F1, sensitivity, calibration, and failure review.
+
+## Claim Boundary
+
+Research-use external validation preparation only. Not clinical deployment and not final diagnosis.
+""", encoding="utf-8")
+
+    html = OUT / "public_multicenter_readiness_report_v32.html"
+    html.write_text(f"""<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>CardioTwin-AI v3.2-public Readiness Report</title>
+  <style>
+    body {{ font-family: Arial, sans-serif; margin: 32px; line-height: 1.45; }}
+    .warning {{ padding: 12px; background: #fff7ed; border-left: 4px solid #f97316; }}
+    pre {{ background: #f8fafc; padding: 12px; overflow-x: auto; }}
+  </style>
+</head>
+<body>
+  <h1>CardioTwin-AI v3.2-public Public Multi-center Readiness Report</h1>
+  <div class="warning">
+    Readiness and label harmonization audit only. No AUROC/AUPRC/F1 computed yet.
+  </div>
+  <h2>Registry</h2>
+  <pre>{json.dumps(registry, indent=2, ensure_ascii=False)}</pre>
+</body>
+</html>
+""", encoding="utf-8")
+
+    zip_path = RELEASE / "cardiotwin_v3_2_public_multicenter_framework_pack.zip"
+    manifest_path = RELEASE / "cardiotwin_v3_2_public_multicenter_framework_manifest.json"
+
+    files = [
+        registry_json,
+        readiness_csv,
+        label_csv,
+        unmapped_csv,
+        samples_csv,
+        protocol_md,
+        mimic_md,
+        html,
+    ]
+    files = [p for p in files if p.exists()]
+
+    manifest = {
+        "project": "CardioTwin-AI",
+        "version": "v3.2-public Public Multi-center Framework Pack",
+        "created_at_utc": datetime.now(timezone.utc).isoformat(),
+        "purpose": "Source-separated public ECG validation framework and readiness audit.",
+        "claim_boundary": registry["claim_boundary"],
+        "files_indexed": len(files),
+        "files": [
+            {
+                "path": p.as_posix(),
+                "size_bytes": int(p.stat().st_size),
+                "sha256": sha256_file(p),
+            }
+            for p in files
+        ],
+    }
+
+    manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8")
+
+    if zip_path.exists():
+        zip_path.unlink()
+
+    with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as z:
+        for p in files:
+            z.write(p, p.as_posix())
+        z.write(manifest_path, manifest_path.as_posix())
+
+    print("DONE: v3.2-public public multi-center framework")
+    print("OUT:", OUT)
+    print("REGISTRY:", registry_json)
+    print("READINESS_CSV:", readiness_csv)
+    print("LABEL_SUPPORT_CSV:", label_csv)
+    print("UNMAPPED_DX_CSV:", unmapped_csv)
+    print("SAMPLES_CSV:", samples_csv)
+    print("PROTOCOL:", protocol_md)
+    print("HTML:", html)
+    print("ZIP:", zip_path)
+    print("MANIFEST:", manifest_path)
+    print("files_indexed:", manifest["files_indexed"])
+    print(json.dumps({
+        "ready_sources": [
+            r["source_id"] for r in source_reports
+            if r["readiness"] == "ready_for_public_locked_validation_candidate"
+        ],
+        "needs_audit_or_missing": {
+            r["source_id"]: r["readiness"] for r in source_reports
+            if r["readiness"] != "ready_for_public_locked_validation_candidate"
+        }
+    }, indent=2, ensure_ascii=False))
+
+if __name__ == "__main__":
+    main()

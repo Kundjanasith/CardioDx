@@ -1,0 +1,154 @@
+{
+  "screening": {
+    "NORM": {
+      "threshold": 0.13,
+      "score": 0.7597876575975889,
+      "f1": 0.585463842220599,
+      "precision": 0.4235138705416116,
+      "sensitivity": 0.94795978710822
+    },
+    "MI": {
+      "threshold": 0.5,
+      "score": null,
+      "f1": null,
+      "precision": null,
+      "sensitivity": null,
+      "note": "insufficient calibration positives; default threshold retained"
+    },
+    "STTC": {
+      "threshold": 0.15,
+      "score": 1.0208123683931358,
+      "f1": 0.7740202275600506,
+      "precision": 0.6477122454377149,
+      "sensitivity": 0.961523360816647
+    },
+    "CD": {
+      "threshold": 0.13,
+      "score": 0.9116657286889749,
+      "f1": 0.6185860889395667,
+      "precision": 0.464270432178006,
+      "sensitivity": 0.9265584970111016
+    },
+    "HYP": {
+      "threshold": 0.1,
+      "score": 0.6307228915659535,
+      "f1": 0.4177972865123703,
+      "precision": 0.267364657814096,
+      "sensitivity": 0.9552919708029197
+    }
+  },
+  "balanced": {
+    "NORM": {
+      "threshold": 0.32,
+      "score": 0.6706521739130434,
+      "f1": 0.6706521739130434,
+      "precision": 0.620412267471091,
+      "sensitivity": 0.729745712596097
+    },
+    "MI": {
+      "threshold": 0.5,
+      "score": null,
+      "f1": null,
+      "precision": null,
+      "sensitivity": null,
+      "note": "insufficient calibration positives; default threshold retained"
+    },
+    "STTC": {
+      "threshold": 0.38,
+      "score": 0.7994982977960939,
+      "f1": 0.7994982977960939,
+      "precision": 0.7353328938694792,
+      "sensitivity": 0.8759324695720455
+    },
+    "CD": {
+      "threshold": 0.34,
+      "score": 0.6786975284425265,
+      "f1": 0.6786975284425265,
+      "precision": 0.627721335268505,
+      "sensitivity": 0.7386848847139197
+    },
+    "HYP": {
+      "threshold": 0.22,
+      "score": 0.449603291213635,
+      "f1": 0.449603291213635,
+      "precision": 0.33159947984395316,
+      "sensitivity": 0.697992700729927
+    }
+  },
+  "high_specificity": {
+    "NORM": {
+      "threshold": 0.71,
+      "score": 0.7443506627938343,
+      "f1": 0.48710359408033826,
+      "precision": 0.8545994065281899,
+      "sensitivity": 0.34062684801892373
+    },
+    "MI": {
+      "threshold": 0.5,
+      "score": null,
+      "f1": null,
+      "precision": null,
+      "sensitivity": null,
+      "note": "insufficient calibration positives; default threshold retained"
+    },
+    "STTC": {
+      "threshold": 0.71,
+      "score": 0.8069335778622453,
+      "f1": 0.7227456258411844,
+      "precision": 0.8430141287284144,
+      "sensitivity": 0.6325088339222615
+    },
+    "CD": {
+      "threshold": 0.74,
+      "score": 0.7455133440762896,
+      "f1": 0.41388343156516044,
+      "precision": 0.8876404494382022,
+      "sensitivity": 0.2698548249359522
+    },
+    "HYP": {
+      "threshold": 0.44,
+      "score": 0.4579763741505411,
+      "f1": 0.17633410672853828,
+      "precision": 0.5786802030456852,
+      "sensitivity": 0.10401459854014598
+    }
+  },
+  "hyp_focus": {
+    "NORM": {
+      "threshold": 0.32,
+      "score": 0.6706521739130434,
+      "f1": 0.6706521739130434,
+      "precision": 0.620412267471091,
+      "sensitivity": 0.729745712596097
+    },
+    "MI": {
+      "threshold": 0.5,
+      "score": null,
+      "f1": null,
+      "precision": null,
+      "sensitivity": null,
+      "note": "insufficient calibration positives; default threshold retained"
+    },
+    "STTC": {
+      "threshold": 0.38,
+      "score": 0.7994982977960939,
+      "f1": 0.7994982977960939,
+      "precision": 0.7353328938694792,
+      "sensitivity": 0.8759324695720455
+    },
+    "CD": {
+      "threshold": 0.34,
+      "score": 0.6786975284425265,
+      "f1": 0.6786975284425265,
+      "precision": 0.627721335268505,
+      "sensitivity": 0.7386848847139197
+    },
+    "HYP": {
+      "threshold": 0.1,
+      "score": 0.8217812857265374,
+      "f1": 0.4177972865123703,
+      "precision": 0.267364657814096,
+      "sensitivity": 0.9552919708029197
+    }
+  }
+}

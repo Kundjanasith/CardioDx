@@ -1,0 +1,68 @@
+code,count,diagnosis,abbreviation,previous_mapped_class,ptbxl_superclass,decision,notes
+164934002,2306,t wave abnormal,TAb,STTC,STTC,include,existing_mapping
+428750005,1883,nonspecific st t abnormality,NSSTTA,STTC,STTC,include,existing_mapping
+426783006,1752,sinus rhythm,NSR,NORM,NORM,include,existing_mapping
+426177001,1677,sinus bradycardia,SB,NORM,NORM,include,existing_mapping
+111975006,1391,prolonged qt interval,LQT,CD,STTC,include,manual_v21_fix_prolonged_qt_repolarization_proxy_STTC
+427084000,1261,sinus tachycardia,STach,,,exclude_other,rhythm_not_in_5_superclass
+284470004,1236,premature atrial contraction,PAC,,,exclude_other,rhythm_not_in_5_superclass
+164873001,1233,left ventricular hypertrophy,LVH,HYP,HYP,include,existing_mapping
+164930006,992,st interval abnormal,STIAb,STTC,STTC,include,existing_mapping
+39732003,940,left axis deviation,LAD,HYP,,exclude_other,manual_v21_fix_left_axis_deviation_not_5_superclass
+425623009,905,lateral ischaemia,LIs,,STTC,include,ischemia_or_st_t_mapping
+67741000119109,870,left atrial enlargement,LAE,,HYP,include,hypertrophy_or_chamber_abnormality_mapping
+59931005,812,t wave inversion,TInv,STTC,STTC,include,existing_mapping
+270492004,769,1st degree av block,IAVB,CD,CD,include,existing_mapping
+164889003,570,atrial fibrillation,AF,,,exclude_other,rhythm_not_in_5_superclass
+59118001,542,right bundle branch block,RBBB,CD,CD,include,existing_mapping
+164917005,464,qwave abnormal,QAb,,,exclude_other,axis_voltage_form_or_artifact_not_in_5_superclass
+427393009,455,sinus arrhythmia,SA,,,exclude_other,rhythm_not_in_5_superclass
+425419005,451,inferior ischaemia,IIs,,STTC,include,ischemia_or_st_t_mapping
+713426002,407,incomplete right bundle branch block,IRBBB,CD,CD,include,existing_mapping
+17338001,387,ventricular premature beats,VPB,,,exclude_other,rhythm_not_in_5_superclass
+251146004,374,low qrs voltages,LQRSV,,,exclude_other,axis_voltage_form_or_artifact_not_in_5_superclass
+426434006,281,anterior ischemia,AnMIs,,STTC,include,ischemia_or_st_t_mapping
+164909002,231,left bundle branch block,LBBB,CD,CD,include,existing_mapping
+698252002,203,nonspecific intraventricular conduction disorder,NSIVCB,CD,CD,include,existing_mapping
+164890007,186,atrial flutter,AFL,,,exclude_other,rhythm_not_in_5_superclass
+445118002,180,left anterior fascicular block,LAnFB,CD,CD,include,existing_mapping
+428417006,140,early repolarization,ERe,,STTC,include,ischemia_or_st_t_mapping
+164931005,134,st elevation,STE,STTC,STTC,include,existing_mapping
+6374002,116,bundle branch block,BBB,CD,CD,include,existing_mapping
+89792004,86,right ventricular hypertrophy,RVH,,HYP,include,hypertrophy_or_chamber_abnormality_mapping
+251120003,86,incomplete left bundle branch block,ILBBB,,CD,include,conduction_mapping
+47665007,83,right axis deviation,RAD,,,exclude_other,axis_voltage_form_or_artifact_not_in_5_superclass
+233917008,74,av block,AVB,,CD,include,conduction_mapping
+253352002,72,left atrial abnormality,LAA,,HYP,include,hypertrophy_or_chamber_abnormality_mapping
+266249003,71,ventricular hypertrophy,VH,,HYP,include,hypertrophy_or_chamber_abnormality_mapping
+195126007,60,atrial hypertrophy,AH,,HYP,include,hypertrophy_or_chamber_abnormality_mapping
+251268003,52,atrial pacing pattern,AP,,,exclude_other,manual_v21_atrial_pacing_pattern_not_5_superclass
+251266004,46,ventricular pacing pattern,VPP,,,exclude_other,rhythm_not_in_5_superclass
+164884008,42,ventricular ectopics,VEB,,,exclude_other,rhythm_not_in_5_superclass
+429622005,38,st depression,STD,,STTC,include,ischemia_or_st_t_mapping
+426761007,32,supraventricular tachycardia,SVT,,,exclude_other,rhythm_not_in_5_superclass
+713422000,28,atrial tachycardia,ATach,,,exclude_other,rhythm_not_in_5_superclass
+713427006,28,complete right bundle branch block,CRBBB,CD,CD,include,existing_mapping
+445211001,25,left posterior fascicular block,LPFB,CD,CD,include,existing_mapping
+195042002,23,2nd degree av block,IIAVB,,CD,include,conduction_mapping
+426664006,19,accelerated junctional rhythm,AJR,,,exclude_other,rhythm_not_in_5_superclass
+253339007,14,right atrial abnormality,RAAb,,HYP,include,hypertrophy_or_chamber_abnormality_mapping
+251139008,12,suspect arm ecg leads reversed,ALR,,,exclude_other,axis_voltage_form_or_artifact_not_in_5_superclass
+164921003,10,r wave abnormal,RAb,,,exclude_other,axis_voltage_form_or_artifact_not_in_5_superclass
+27885002,8,complete heart block,CHB,,CD,include,conduction_mapping
+195101003,7,wandering atrial pacemaker,WAP,,,exclude_other,rhythm_not_in_5_superclass
+164865005,7,myocardial infarction,MI,MI,MI,include,existing_mapping
+426627000,6,bradycardia,Brady,,,exclude_other,rhythm_not_in_5_superclass
+55930002,6,s t changes,STC,HYP,STTC,include,manual_v21_fix_st_changes_to_STTC
+426995002,5,junctional escape,JE,,,exclude_other,rhythm_not_in_5_superclass
+426648003,4,junctional tachycardia,JTach,,,exclude_other,rhythm_not_in_5_superclass
+164896001,3,ventricular fibrillation,VF,,,exclude_other,rhythm_not_in_5_superclass
+195080001,2,atrial fibrillation and flutter,AFAFL,,,exclude_other,rhythm_not_in_5_superclass
+74390002,2,wolff parkinson white pattern,WPW,,CD,include,manual_v21_wpw_preexcitation_conduction_proxy
+11157007,2,ventricular bigeminy,VBig,,,exclude_other,rhythm_not_in_5_superclass
+195060002,2,ventricular pre excitation,VPEx,,CD,include,manual_v21_ventricular_pre_excitation_conduction_proxy
+49578007,2,shortened pr interval,SPRI,,,exclude_other,axis_voltage_form_or_artifact_not_in_5_superclass
+251180001,1,ventricular trigeminy,VTrig,,,exclude_other,rhythm_not_in_5_superclass
+81898007,1,ventricular escape rhythm,VEsR,,,exclude_other,rhythm_not_in_5_superclass
+413444003,1,acute myocardial ischemia,AMIs,,STTC,include,ischemia_or_st_t_mapping
+63593006,1,supraventricular premature beats,SVPB,,,exclude_other,rhythm_not_in_5_superclass

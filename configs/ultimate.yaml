@@ -1,0 +1,19 @@
+project: CardioTwin-AI 12L Ultimate Research Platform
+clinical_boundary: Research-use preliminary screening and visual explanation only; not final diagnosis.
+primary_dataset: PTB-XL
+labels: [NORM, MI, STTC, CD, HYP]
+safety_v12:
+  low_sqi_threshold: 0.55
+  caution_sqi_threshold: 0.70
+  uncertainty_margin: 0.08
+  high_confidence_threshold: 0.85
+  profiles: [screening, balanced, high_specificity]
+deep_v20:
+  models: [resnet1d, inceptiontime, transformer]
+  target_fs: 100
+  duration_sec: 10
+  batch_size: 128
+  epochs_default: 5
+external_validation:
+  cinc2020_root: data/raw/cinc2020
+  mimic_iv_ecg_root: data/raw/mimic_iv_ecg

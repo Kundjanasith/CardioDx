@@ -1,0 +1,97 @@
+{
+  "project": "CardioTwin-AI",
+  "version": "v3.4.8 PTB-XL Doctor-review Template Pack",
+  "created_at_utc": "2026-05-31T11:52:47.562026+00:00",
+  "summary": {
+    "project": "CardioTwin-AI",
+    "version": "v3.4.8 PTB-XL doctor-review template addendum",
+    "created_at_utc": "2026-05-31T11:52:47.493720+00:00",
+    "source_failure_review": "artifacts/public_multicenter_validation_v34/ptbxl_failure_case_review_summary_v347.json",
+    "source_failure_review_sha256": "53255abdeb373ea0014cb2fdaadce286f2244d18dc570e56ffb0dd53df6589d1",
+    "review_cases_total": 400,
+    "bucket_counts": {
+      "Fold-9 best-F1 top false negatives": 100,
+      "Runtime screening top false negatives": 100,
+      "Runtime screening top false positives": 100,
+      "Fold-9 best-F1 top false positives": 100
+    },
+    "event_counts": {
+      "FN": 200,
+      "FP": 200
+    },
+    "label_counts": {
+      "MI": 123,
+      "CD": 109,
+      "STTC": 101,
+      "NORM": 36,
+      "HYP": 31
+    },
+    "outputs": {
+      "template_csv": "artifacts/public_multicenter_validation_v34/ptbxl_doctor_review_template_v348.csv",
+      "casebook_md": "artifacts/public_multicenter_validation_v34/PTBXL_DOCTOR_REVIEW_CASEBOOK_v348.md",
+      "instructions_md": "artifacts/public_multicenter_validation_v34/PTBXL_DOCTOR_REVIEW_INSTRUCTIONS_v348.md",
+      "report_html": "artifacts/public_multicenter_validation_v34/ptbxl_doctor_review_template_v348.html",
+      "summary_json": "artifacts/public_multicenter_validation_v34/ptbxl_doctor_review_template_summary_v348.json"
+    },
+    "claim_boundary": "Doctor-review template only. It does not create clinical adjudication results until qualified reviewers complete the template."
+  },
+  "files_indexed": 11,
+  "files": [
+    {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_doctor_review_template_v348.csv",
+      "size_bytes": 298759,
+      "sha256": "5a4530669c5bf64eee28a68d0a4398fddd8ca41d1831d82f781ea38a9ce0f6cb"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/PTBXL_DOCTOR_REVIEW_CASEBOOK_v348.md",
+      "size_bytes": 37147,
+      "sha256": "9c17b22b8366ef5a3e97ea737655dcc2c1a6fbef1c3b4bc69ed21bf720f58c6b"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/PTBXL_DOCTOR_REVIEW_INSTRUCTIONS_v348.md",
+      "size_bytes": 958,
+      "sha256": "565b1e1fc963a91823147e706e50b3bea16e4ce49a3bf98c03d47b54298d929f"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_doctor_review_template_summary_v348.json",
+      "size_bytes": 1513,
+      "sha256": "b065c683d7b8f10d0e0baa5e25a1697316f1a9f7b3e6c104d66a0e024720f2c7"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_doctor_review_template_v348.html",
+      "size_bytes": 74419,
+      "sha256": "a379b339da2ca86620a5945fcba8642b1237617d0b924079a84eb13ea2bc9652"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_failure_case_review_summary_v347.json",
+      "size_bytes": 11426,
+      "sha256": "53255abdeb373ea0014cb2fdaadce286f2244d18dc570e56ffb0dd53df6589d1"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_failure_case_events_v347.csv",
+      "size_bytes": 11248244,
+      "sha256": "13d5af609481b3358569b3298c081db4dcec4d97a29259f3d657cf01aa74ec4d"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_top_false_positive_cases_v347.csv",
+      "size_bytes": 35149,
+      "sha256": "83968532b5f13df9c04bf749d423d623011c97c3d1afcfb6696eb366daebdcc2"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_top_false_negative_cases_v347.csv",
+      "size_bytes": 34214,
+      "sha256": "9ad6bedb92eb1de71f366e79cd11565e6466ebc00bae5ffc7ee26a957dbad87e"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_top_false_positive_cases_bestf1_v347.csv",
+      "size_bytes": 37413,
+      "sha256": "83db9fb14f86d6235ef496581f55dea59a5d2d489702e6352ecada11e8accf40"
+    },
+    {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_top_false_negative_cases_bestf1_v347.csv",
+      "size_bytes": 35783,
+      "sha256": "217382e7ad33603fb133984f22e2a0b7a57a369686f766e8bcb7c0c38738490e"
+    }
+  ],
+  "claim_boundary": "Doctor-review template only. It does not create clinical adjudication results until qualified reviewers complete the template."
+}

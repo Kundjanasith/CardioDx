@@ -1,0 +1,351 @@
+{
+  "project": "CardioTwin-AI",
+  "version": "v3.3.5 final public multicenter validation report pack",
+  "created_at_utc": "2026-05-24T21:19:50.575509+00:00",
+  "scope": "Final report pack for v3.3.0-v3.3.4 public multi-center validation sequence.",
+  "cohort": {
+    "total_records_selected": 3222,
+    "source_table": {
+      "cpsc_2018": {
+        "records": 894,
+        "NORM": 300,
+        "MI": 0,
+        "STTC": 300,
+        "CD": 311,
+        "HYP": 0
+      },
+      "cpsc_2018_extra": {
+        "records": 950,
+        "NORM": 2,
+        "MI": 467,
+        "STTC": 605,
+        "CD": 306,
+        "HYP": 226
+      },
+      "ptb": {
+        "records": 415,
+        "NORM": 80,
+        "MI": 303,
+        "STTC": 0,
+        "CD": 22,
+        "HYP": 13
+      },
+      "georgia": {
+        "records": 963,
+        "NORM": 300,
+        "MI": 7,
+        "STTC": 446,
+        "CD": 330,
+        "HYP": 303
+      }
+    },
+    "label_totals": {
+      "NORM": 682,
+      "MI": 777,
+      "STTC": 1351,
+      "CD": 969,
+      "HYP": 542
+    }
+  },
+  "inference": {
+    "records_requested": 3222,
+    "ok_count": 3222,
+    "error_count": 0,
+    "runtime_seconds_total": 319.8433849811554,
+    "profile": "screening",
+    "device": "cpu",
+    "model_path": "artifacts\\models\\inceptiontime_v21_safety.pt",
+    "threshold_path": "artifacts\\deep_safety_v21\\threshold_profiles_deep.json",
+    "source_runtime": {
+      "cpsc_2018": {
+        "rows": 894,
+        "ok": 894,
+        "error": 0,
+        "mean_runtime_seconds": 0.09218255758818897
+      },
+      "cpsc_2018_extra": {
+        "rows": 950,
+        "ok": 950,
+        "error": 0,
+        "mean_runtime_seconds": 0.09151020451595909
+      },
+      "georgia": {
+        "rows": 963,
+        "ok": 963,
+        "error": 0,
+        "mean_runtime_seconds": 0.09184360627939891
+      },
+      "ptb": {
+        "rows": 415,
+        "ok": 415,
+        "error": 0,
+        "mean_runtime_seconds": 0.11026645453579455
+      }
+    }
+  },
+  "metrics": {
+    "n_ok_rows": 3222,
+    "n_error_rows": 0,
+    "group_summary": {
+      "ALL_SOURCES_STACKED_REFERENCE_ONLY": {
+        "group": "ALL_SOURCES_STACKED_REFERENCE_ONLY",
+        "macro_auroc": 0.8090379398203323,
+        "macro_auprc": 0.6308889859483346,
+        "macro_f1": 0.546475139623044,
+        "macro_sensitivity": 0.8523104548151496,
+        "macro_specificity": 0.5581234715637216,
+        "macro_precision": 0.4231012041933555,
+        "labels_with_valid_auroc": 5
+      },
+      "cpsc_2018": {
+        "group": "cpsc_2018",
+        "macro_auroc": 0.8394086059577441,
+        "macro_auprc": 0.7289478643190268,
+        "macro_f1": 0.3760039057279059,
+        "macro_sensitivity": 0.4876634512325831,
+        "macro_specificity": 0.5955692162859442,
+        "macro_precision": 0.31889186182073265,
+        "labels_with_valid_auroc": 3
+      },
+      "cpsc_2018_extra": {
+        "group": "cpsc_2018_extra",
+        "macro_auroc": 0.8076029136993542,
+        "macro_auprc": 0.5908221705450434,
+        "macro_f1": 0.5030275262744933,
+        "macro_sensitivity": 0.8910552219799796,
+        "macro_specificity": 0.49682553630920345,
+        "macro_precision": 0.4279043121645404,
+        "labels_with_valid_auroc": 5
+      },
+      "georgia": {
+        "group": "georgia",
+        "macro_auroc": 0.7546458500979961,
+        "macro_auprc": 0.5305637682299218,
+        "macro_f1": 0.5032572905823809,
+        "macro_sensitivity": 0.7934382923237872,
+        "macro_specificity": 0.5405848478667675,
+        "macro_precision": 0.4061471503746438,
+        "labels_with_valid_auroc": 5
+      },
+      "ptb": {
+        "group": "ptb",
+        "macro_auroc": 0.9163566007649272,
+        "macro_auprc": 0.7194344542314709,
+        "macro_f1": 0.3615492902451978,
+        "macro_sensitivity": 0.7323711601929423,
+        "macro_specificity": 0.624888599957211,
+        "macro_precision": 0.322707751898985,
+        "labels_with_valid_auroc": 4
+      }
+    },
+    "interpretation": [
+      "Metrics are reported by source. ALL_SOURCES_STACKED_REFERENCE_ONLY is descriptive only and must not be treated as a random-split validation claim.",
+      "This uses weak/derived public challenge labels mapped to CardioTwin-AI superclasses.",
+      "This is research-use external validation, not clinical deployment or final diagnosis."
+    ]
+  },
+  "calibration_threshold_stress": {
+    "n_ok_rows": 3222,
+    "claim_boundary": "Calibration and threshold stress analysis only. Not clinical deployment and not final diagnostic thresholding.",
+    "outputs": {
+      "threshold_curve_csv": "artifacts\\public_multicenter_validation_v33\\public_threshold_stress_curve_v333.csv",
+      "threshold_picks_json": "artifacts\\public_multicenter_validation_v33\\public_threshold_stress_picks_v333.json",
+      "summary_json": "artifacts\\public_multicenter_validation_v33\\public_calibration_threshold_summary_v333.json",
+      "summary_md": "artifacts\\public_multicenter_validation_v33\\PUBLIC_CALIBRATION_THRESHOLD_STRESS_v333.md",
+      "summary_html": "artifacts\\public_multicenter_validation_v33\\public_calibration_threshold_stress_report_v333.html"
+    }
+  },
+  "failure_review": {
+    "n_ok_rows": 3222,
+    "failure_summary": {
+      "total_prediction_rows": 3222,
+      "total_failure_events": 6020,
+      "failure_events_by_type": {
+        "false_positive": 5302,
+        "false_negative": 718
+      },
+      "failure_events_by_label": {
+        "HYP": 1864,
+        "CD": 1344,
+        "STTC": 972,
+        "NORM": 947,
+        "MI": 893
+      },
+      "failure_events_by_source": {
+        "cpsc_2018_extra": 1846,
+        "georgia": 1784,
+        "cpsc_2018": 1631,
+        "ptb": 759
+      },
+      "failure_events_by_source_label": {
+        "cpsc_2018::CD": {
+          "events": 222,
+          "false_positive": 208,
+          "false_negative": 14,
+          "mean_probability": 0.3435412651297074,
+          "mean_sqi": 0.8146647221920169
+        },
+        "cpsc_2018::HYP": {
+          "events": 612,
+          "false_positive": 612,
+          "false_negative": 0,
+          "mean_probability": 0.47077183004200845,
+          "mean_sqi": 0.8081042611412022
+        },
+        "cpsc_2018::MI": {
+          "events": 177,
+          "false_positive": 177,
+          "false_negative": 0,
+          "mean_probability": 0.7647796185676661,
+          "mean_sqi": 0.8171323408987051
+        },
+        "cpsc_2018::NORM": {
+          "events": 342,
+          "false_positive": 337,
+          "false_negative": 5,
+          "mean_probability": 0.6567475786922794,
+          "mean_sqi": 0.8083575883760916
+        },
+        "cpsc_2018::STTC": {
+          "events": 278,
+          "false_positive": 128,
+          "false_negative": 150,
+          "mean_probability": 0.24126331319267402,
+          "mean_sqi": 0.8076401207575618
+        },
+        "cpsc_2018_extra::CD": {
+          "events": 385,
+          "false_positive": 367,
+          "false_negative": 18,
+          "mean_probability": 0.4242571686506829,
+          "mean_sqi": 0.8215984835833265
+        },
+        "cpsc_2018_extra::HYP": {
+          "events": 634,
+          "false_positive": 622,
+          "false_negative": 12,
+          "mean_probability": 0.5089335556465938,
+          "mean_sqi": 0.8132131530807442
+        },
+        "cpsc_2018_extra::MI": {
+          "events": 270,
+          "false_positive": 169,
+          "false_negative": 101,
+          "mean_probability": 0.5575929394006919,
+          "mean_sqi": 0.8138685208975612
+        },
+        "cpsc_2018_extra::NORM": {
+          "events": 270,
+          "false_positive": 270,
+          "false_negative": 0,
+          "mean_probability": 0.5169545521890676,
+          "mean_sqi": 0.808364342050292
+        },
+        "cpsc_2018_extra::STTC": {
+          "events": 287,
+          "false_positive": 156,
+          "false_negative": 131,
+          "mean_probability": 0.3250960415507158,
+          "mean_sqi": 0.8146013280073096
+        },
+        "georgia::CD": {
+          "events": 434,
+          "false_positive": 384,
+          "false_negative": 50,
+          "mean_probability": 0.41650757045927134,
+          "mean_sqi": 0.8358428328497333
+        },
+        "georgia::HYP": {
+          "events": 464,
+          "false_positive": 426,
+          "false_negative": 38,
+          "mean_probability": 0.3879643302412848,
+          "mean_sqi": 0.8370904035079263
+        },
+        "georgia::MI": {
+          "events": 363,
+          "false_positive": 360,
+          "false_negative": 3,
+          "mean_probability": 0.7564523796609939,
+          "mean_sqi": 0.8400242889525501
+        },
+        "georgia::NORM": {
+          "events": 268,
+          "false_positive": 229,
+          "false_negative": 39,
+          "mean_probability": 0.4515710591074468,
+          "mean_sqi": 0.8320738525853599
+        },
+        "georgia::STTC": {
+          "events": 255,
+          "false_positive": 167,
+          "false_negative": 88,
+          "mean_probability": 0.3314072417894803,
+          "mean_sqi": 0.8356432938008385
+        },
+        "ptb::CD": {
+          "events": 303,
+          "false_positive": 303,
+          "false_negative": 0,
+          "mean_probability": 0.4349825088143742,
+          "mean_sqi": 0.8836717269247981
+        },
+        "ptb::HYP": {
+          "events": 154,
+          "false_positive": 153,
+          "false_negative": 1,
+          "mean_probability": 0.2643123047801291,
+          "mean_sqi": 0.8764826482146659
+        },
+        "ptb::MI": {
+          "events": 83,
+          "false_positive": 19,
+          "false_negative": 64,
+          "mean_probability": 0.36786688407546425,
+          "mean_sqi": 0.8858090055975398
+        },
+        "ptb::NORM": {
+          "events": 67,
+          "false_positive": 63,
+          "false_negative": 4,
+          "mean_probability": 0.407193430657707,
+          "mean_sqi": 0.8747572335566637
+        },
+        "ptb::STTC": {
+          "events": 152,
+          "false_positive": 152,
+          "false_negative": 0,
+          "mean_probability": 0.37905123339671837,
+          "mean_sqi": 0.8837927882586759
+        }
+      },
+      "low_sqi_failure_events": 2,
+      "high_confidence_false_positive_events": 1097,
+      "low_model_score_false_negative_events": 616
+    },
+    "recommended_actions": [
+      "Review top false positives and false negatives by source and label before any clinical claim.",
+      "Prioritize doctor review for high-confidence false positives and low-score false negatives.",
+      "Treat rare-label source results cautiously, especially source-label pairs with fewer than 30 positives.",
+      "Use v3.3.3 threshold stress as analytical guidance only; do not overwrite frozen runtime thresholds yet.",
+      "Add prospective doctor-in-the-loop adjudication before clinical deployment claims."
+    ]
+  },
+  "safe_claim": "CardioTwin-AI was evaluated with a frozen runtime on a locked, source-separated public multi-center ECG cohort. The system showed promising discrimination across multiple public sources, with screening-oriented sensitivity and a need for source-aware threshold calibration and doctor-in-the-loop review before clinical claims.",
+  "disallowed_claims": [
+    "clinically validated",
+    "doctor-level diagnosis",
+    "ready for autonomous clinical diagnosis",
+    "generalizes to every hospital",
+    "MIMIC-IV-ECG validated",
+    "prospectively validated"
+  ],
+  "claim_boundary": "Research-use public multi-center validation evidence only. Not prospective clinical validation, not final diagnosis, and not clinical deployment.",
+  "outputs": {
+    "paper_ready_results_table_csv": "artifacts\\public_multicenter_validation_v33\\PUBLIC_PAPER_READY_RESULTS_TABLE_v335.csv",
+    "final_summary_json": "artifacts\\public_multicenter_validation_v33\\public_multicenter_validation_final_summary_v335.json",
+    "final_report_md": "artifacts\\public_multicenter_validation_v33\\PUBLIC_MULTICENTER_VALIDATION_FINAL_REPORT_v335.md",
+    "final_report_html": "artifacts\\public_multicenter_validation_v33\\public_multicenter_validation_final_report_v335.html",
+    "claim_boundary_md": "artifacts\\public_multicenter_validation_v33\\PUBLIC_CLAIM_BOUNDARY_AND_NEXT_STEPS_v335.md"
+  }
+}

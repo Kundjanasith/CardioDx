@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cardiotwin-ai-12l"
+version = "0.1.0"
+description = "Low-cost 12-lead ECG explainable cardiac digital twin research platform"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "CardioTwin-AI Research Team" }]
+license = { text = "Research-use prototype" }
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

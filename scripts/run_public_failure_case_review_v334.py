@@ -1,0 +1,438 @@
+﻿from pathlib import Path
+import json
+import math
+import zipfile
+import hashlib
+from datetime import datetime, timezone
+from collections import Counter, defaultdict
+
+import numpy as np
+import pandas as pd
+
+OUT = Path("artifacts/public_multicenter_validation_v33")
+RELEASE = Path("artifacts/release_rc1")
+OUT.mkdir(parents=True, exist_ok=True)
+RELEASE.mkdir(parents=True, exist_ok=True)
+
+PRED_CSV = OUT / "public_locked_inference_predictions_v331_full.csv"
+METRICS_JSON = OUT / "public_per_source_metrics_v332.json"
+THRESHOLD_SUMMARY_JSON = OUT / "public_calibration_threshold_summary_v333.json"
+
+TARGET_CLASSES = ["NORM", "MI", "STTC", "CD", "HYP"]
+ABNORMAL_CLASSES = ["MI", "STTC", "CD", "HYP"]
+
+
+def sha256_file(path):
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def as_bool(x):
+    if isinstance(x, bool):
+        return x
+    return str(x).strip().lower() in {"true", "1", "yes"}
+
+
+def safe_float(x):
+    try:
+        v = float(x)
+        if math.isfinite(v):
+            return v
+        return None
+    except Exception:
+        return None
+
+
+def load_json(path):
+    if Path(path).exists():
+        return json.loads(Path(path).read_text(encoding="utf-8"))
+    return {}
+
+
+def get_source_label_prevalence(df):
+    out = {}
+    for source, g in df.groupby("source_id"):
+        out[source] = {}
+        for lab in TARGET_CLASSES:
+            pos = int(pd.to_numeric(g[f"true_{lab}"], errors="coerce").fillna(0).sum())
+            out[source][lab] = {
+                "positives": pos,
+                "records": int(len(g)),
+                "prevalence": float(pos / len(g)) if len(g) else None,
+            }
+    return out
+
+
+def classify_failure(row, label, prevalence_info):
+    source = row["source_id"]
+    true_v = int(row[f"true_{label}"])
+    pred_v = int(row[f"pred_{label}"])
+    prob = safe_float(row.get(f"prob_{label}", None))
+    sqi = safe_float(row.get("sqi", None))
+    low_sqi = as_bool(row.get("low_sqi", False))
+
+    info = prevalence_info.get(source, {}).get(label, {})
+    positives = info.get("positives", 0)
+
+    tags = []
+
+    if low_sqi or (sqi is not None and sqi < 0.55):
+        tags.append("low_signal_quality_review")
+
+    if positives < 30:
+        tags.append("rare_label_in_source_interpret_with_caution")
+
+    if true_v == 0 and pred_v == 1:
+        tags.append("false_positive")
+        if prob is not None and prob >= 0.80:
+            tags.append("high_confidence_false_positive")
+        elif prob is not None and prob < 0.30:
+            tags.append("threshold_boundary_false_positive")
+
+    if true_v == 1 and pred_v == 0:
+        tags.append("false_negative")
+        if prob is not None and prob <= 0.20:
+            tags.append("low_model_score_false_negative")
+        else:
+            tags.append("threshold_boundary_false_negative")
+
+    if source in {"georgia", "cpsc_2018_extra"}:
+        tags.append("source_shift_candidate")
+
+    if not tags:
+        tags.append("review")
+
+    return "|".join(tags)
+
+
+def make_failure_rows(df):
+    prevalence_info = get_source_label_prevalence(df)
+    rows = []
+
+    for _, row in df.iterrows():
+        if row.get("status") != "ok":
+            continue
+
+        for lab in TARGET_CLASSES:
+            true_v = int(row.get(f"true_{lab}", 0))
+            pred_v = int(row.get(f"pred_{lab}", 0))
+
+            if true_v == pred_v:
+                continue
+
+            prob = safe_float(row.get(f"prob_{lab}", None))
+            threshold = safe_float(row.get(f"threshold_{lab}", None))
+            sqi = safe_float(row.get("sqi", None))
+
+            failure_type = "false_positive" if true_v == 0 and pred_v == 1 else "false_negative"
+
+            if failure_type == "false_positive":
+                severity_score = prob if prob is not None else 0.0
+            else:
+                severity_score = 1.0 - prob if prob is not None else 0.0
+
+            rows.append({
+                "source_id": row.get("source_id", ""),
+                "record_id": row.get("record_id", ""),
+                "label": lab,
+                "failure_type": failure_type,
+                "true_value": true_v,
+                "pred_value": pred_v,
+                "probability": prob,
+                "threshold": threshold,
+                "severity_score": severity_score,
+                "sqi": sqi,
+                "low_sqi": row.get("low_sqi", ""),
+                "uncertain": row.get("uncertain", ""),
+                "recommendation": row.get("recommendation", ""),
+                "metric_labels": row.get("metric_labels", ""),
+                "positive_labels": row.get("positive_labels", ""),
+                "abnormal_positive_labels": row.get("abnormal_positive_labels", ""),
+                "hea_path": row.get("hea_path", ""),
+                "failure_tags": classify_failure(row, lab, prevalence_info),
+            })
+
+    return rows
+
+
+def summarize_failures(fail_df, pred_df):
+    summary = {
+        "total_prediction_rows": int(len(pred_df)),
+        "total_failure_events": int(len(fail_df)),
+        "failure_events_by_type": {},
+        "failure_events_by_label": {},
+        "failure_events_by_source": {},
+        "failure_events_by_source_label": {},
+        "low_sqi_failure_events": 0,
+        "high_confidence_false_positive_events": 0,
+        "low_model_score_false_negative_events": 0,
+    }
+
+    if len(fail_df) == 0:
+        return summary
+
+    summary["failure_events_by_type"] = {
+        str(k): int(v) for k, v in fail_df["failure_type"].value_counts().items()
+    }
+    summary["failure_events_by_label"] = {
+        str(k): int(v) for k, v in fail_df["label"].value_counts().items()
+    }
+    summary["failure_events_by_source"] = {
+        str(k): int(v) for k, v in fail_df["source_id"].value_counts().items()
+    }
+
+    source_label = {}
+    for (src, lab), g in fail_df.groupby(["source_id", "label"]):
+        source_label[f"{src}::{lab}"] = {
+            "events": int(len(g)),
+            "false_positive": int((g["failure_type"] == "false_positive").sum()),
+            "false_negative": int((g["failure_type"] == "false_negative").sum()),
+            "mean_probability": safe_float(pd.to_numeric(g["probability"], errors="coerce").mean()),
+            "mean_sqi": safe_float(pd.to_numeric(g["sqi"], errors="coerce").mean()),
+        }
+
+    summary["failure_events_by_source_label"] = source_label
+
+    tags_joined = fail_df["failure_tags"].fillna("").astype(str)
+    summary["low_sqi_failure_events"] = int(tags_joined.str.contains("low_signal_quality_review").sum())
+    summary["high_confidence_false_positive_events"] = int(tags_joined.str.contains("high_confidence_false_positive").sum())
+    summary["low_model_score_false_negative_events"] = int(tags_joined.str.contains("low_model_score_false_negative").sum())
+
+    return summary
+
+
+def top_review_cases(fail_df, n=120):
+    if len(fail_df) == 0:
+        return pd.DataFrame()
+
+    frames = []
+
+    for ftype in ["false_positive", "false_negative"]:
+        g = fail_df[fail_df["failure_type"] == ftype].copy()
+        if len(g) == 0:
+            continue
+
+        g = g.sort_values("severity_score", ascending=False).head(n)
+        frames.append(g)
+
+    if not frames:
+        return pd.DataFrame()
+
+    out = pd.concat(frames, ignore_index=True)
+    out = out.sort_values(["failure_type", "severity_score"], ascending=[True, False])
+    return out
+
+
+def build_doctor_review_template(top_df):
+    rows = []
+
+    for _, r in top_df.iterrows():
+        rows.append({
+            "review_status": "pending",
+            "reviewer_name": "",
+            "review_date": "",
+            "source_id": r.get("source_id", ""),
+            "record_id": r.get("record_id", ""),
+            "label_under_review": r.get("label", ""),
+            "failure_type": r.get("failure_type", ""),
+            "model_probability": r.get("probability", ""),
+            "model_threshold": r.get("threshold", ""),
+            "sqi": r.get("sqi", ""),
+            "failure_tags": r.get("failure_tags", ""),
+            "model_output_labels": r.get("positive_labels", ""),
+            "reference_metric_labels": r.get("metric_labels", ""),
+            "doctor_agrees_with_reference_label": "",
+            "doctor_agrees_with_model_flag": "",
+            "suspected_label_mapping_issue": "",
+            "suspected_signal_quality_issue": "",
+            "clinical_comment": "",
+            "recommended_action": "",
+            "hea_path": r.get("hea_path", ""),
+        })
+
+    return pd.DataFrame(rows)
+
+
+def main():
+    created = datetime.now(timezone.utc).isoformat()
+
+    if not PRED_CSV.exists():
+        raise FileNotFoundError(PRED_CSV)
+
+    pred_df = pd.read_csv(PRED_CSV)
+    pred_df = pred_df[pred_df["status"] == "ok"].copy()
+
+    fail_rows = make_failure_rows(pred_df)
+    fail_df = pd.DataFrame(fail_rows)
+
+    failure_csv = OUT / "public_failure_cases_v334.csv"
+    top_csv = OUT / "public_top_failure_cases_for_review_v334.csv"
+    doctor_template_csv = OUT / "doctor_in_the_loop_review_template_v334.csv"
+    summary_json = OUT / "public_failure_case_review_summary_v334.json"
+    md_path = OUT / "PUBLIC_FAILURE_CASE_REVIEW_v334.md"
+    html_path = OUT / "public_failure_case_review_report_v334.html"
+
+    fail_df.to_csv(failure_csv, index=False, encoding="utf-8")
+
+    top_df = top_review_cases(fail_df, n=120)
+    top_df.to_csv(top_csv, index=False, encoding="utf-8")
+
+    doctor_df = build_doctor_review_template(top_df)
+    doctor_df.to_csv(doctor_template_csv, index=False, encoding="utf-8")
+
+    metrics_payload = load_json(METRICS_JSON)
+    threshold_payload = load_json(THRESHOLD_SUMMARY_JSON)
+
+    failure_summary = summarize_failures(fail_df, pred_df)
+
+    recommended_actions = [
+        "Review top false positives and false negatives by source and label before any clinical claim.",
+        "Prioritize doctor review for high-confidence false positives and low-score false negatives.",
+        "Treat rare-label source results cautiously, especially source-label pairs with fewer than 30 positives.",
+        "Use v3.3.3 threshold stress as analytical guidance only; do not overwrite frozen runtime thresholds yet.",
+        "Add prospective doctor-in-the-loop adjudication before clinical deployment claims."
+    ]
+
+    payload = {
+        "project": "CardioTwin-AI",
+        "version": "v3.3.4 public failure-case review",
+        "created_at_utc": created,
+        "predictions_csv": str(PRED_CSV),
+        "metrics_json": str(METRICS_JSON),
+        "threshold_summary_json": str(THRESHOLD_SUMMARY_JSON),
+        "n_ok_rows": int(len(pred_df)),
+        "failure_summary": failure_summary,
+        "outputs": {
+            "failure_cases_csv": str(failure_csv),
+            "top_failure_cases_csv": str(top_csv),
+            "doctor_review_template_csv": str(doctor_template_csv),
+            "summary_json": str(summary_json),
+            "summary_md": str(md_path),
+            "summary_html": str(html_path),
+        },
+        "recommended_actions": recommended_actions,
+        "important_interpretation": [
+            "Failure events are label-level events, so one ECG record can contribute multiple failure events.",
+            "This review uses weak/derived public labels and should be followed by doctor adjudication.",
+            "Failure review does not modify the frozen v3.0.4.1 runtime."
+        ],
+        "claim_boundary": "Failure-case review and doctor-review preparation only. Not clinical diagnosis and not prospective validation."
+    }
+
+    summary_json.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+
+    lines = []
+    lines.append("# CardioTwin-AI v3.3.4 Public Failure-case Review")
+    lines.append("")
+    lines.append(f"Created: {created}")
+    lines.append("")
+    lines.append("## Purpose")
+    lines.append("")
+    lines.append("Identify false positives, false negatives, high-confidence errors, low-SQI cases, and source-shift candidates after public source-separated validation.")
+    lines.append("")
+    lines.append("## Failure Summary")
+    lines.append("")
+    lines.append(json.dumps(failure_summary, indent=2, ensure_ascii=False))
+    lines.append("")
+    lines.append("## Recommended Actions")
+    lines.append("")
+    for a in recommended_actions:
+        lines.append("- " + a)
+    lines.append("")
+    lines.append("## Outputs")
+    lines.append("")
+    lines.append(f"- {failure_csv}")
+    lines.append(f"- {top_csv}")
+    lines.append(f"- {doctor_template_csv}")
+    lines.append(f"- {summary_json}")
+    lines.append("")
+    lines.append("## Claim Boundary")
+    lines.append("")
+    lines.append(payload["claim_boundary"])
+    md_path.write_text("\n".join(lines), encoding="utf-8")
+
+    html_path.write_text(
+        "<!doctype html><html><head><meta charset='utf-8'>"
+        "<title>CardioTwin-AI v3.3.4 Failure-case Review</title>"
+        "<style>body{font-family:Arial,sans-serif;margin:32px;line-height:1.45}"
+        ".warning{padding:12px;background:#fff7ed;border-left:4px solid #f97316}"
+        "pre{background:#f8fafc;padding:12px;overflow-x:auto}"
+        "table{border-collapse:collapse;width:100%;font-size:12px}"
+        "th,td{border:1px solid #ddd;padding:6px}th{background:#f8fafc}</style></head><body>"
+        "<h1>CardioTwin-AI v3.3.4 Public Failure-case Review</h1>"
+        "<div class='warning'>Failure-case review only. Uses weak public labels. Doctor adjudication required before clinical claims.</div>"
+        "<h2>Failure Summary</h2>"
+        "<pre>" + json.dumps(failure_summary, indent=2, ensure_ascii=False) + "</pre>"
+        "<h2>Top Review Cases</h2>"
+        + (top_df.head(100).to_html(index=False) if len(top_df) else "<p>No failure cases.</p>")
+        + "</body></html>",
+        encoding="utf-8"
+    )
+
+    zip_path = RELEASE / "cardiotwin_v3_3_4_public_failure_case_review_pack.zip"
+    manifest_path = RELEASE / "cardiotwin_v3_3_4_public_failure_case_review_manifest.json"
+
+    files = [
+        failure_csv,
+        top_csv,
+        doctor_template_csv,
+        summary_json,
+        md_path,
+        html_path,
+        OUT / "public_per_source_metrics_v332.json",
+        OUT / "public_calibration_threshold_summary_v333.json",
+    ]
+    files = [p for p in files if p.exists()]
+
+    manifest = {
+        "project": "CardioTwin-AI",
+        "version": "v3.3.4 Public Failure-case Review Pack",
+        "created_at_utc": datetime.now(timezone.utc).isoformat(),
+        "summary": payload,
+        "files_indexed": len(files),
+        "files": [
+            {
+                "path": p.as_posix(),
+                "size_bytes": int(p.stat().st_size),
+                "sha256": sha256_file(p),
+            }
+            for p in files
+        ],
+        "claim_boundary": payload["claim_boundary"],
+    }
+
+    manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8")
+
+    if zip_path.exists():
+        zip_path.unlink()
+
+    with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as z:
+        for p in files:
+            z.write(p, p.as_posix())
+        z.write(manifest_path, manifest_path.as_posix())
+
+    print("DONE: v3.3.4 public failure-case review")
+    print("FAILURE_CSV:", failure_csv)
+    print("TOP_REVIEW_CSV:", top_csv)
+    print("DOCTOR_TEMPLATE:", doctor_template_csv)
+    print("SUMMARY_JSON:", summary_json)
+    print("MD:", md_path)
+    print("HTML:", html_path)
+    print("ZIP:", zip_path)
+    print("MANIFEST:", manifest_path)
+    print(json.dumps({
+        "n_ok_rows": int(len(pred_df)),
+        "total_failure_events": failure_summary["total_failure_events"],
+        "failure_events_by_type": failure_summary["failure_events_by_type"],
+        "failure_events_by_label": failure_summary["failure_events_by_label"],
+        "failure_events_by_source": failure_summary["failure_events_by_source"],
+        "files_indexed": manifest["files_indexed"],
+        "claim_boundary": payload["claim_boundary"],
+    }, indent=2, ensure_ascii=False))
+
+
+if __name__ == "__main__":
+    main()

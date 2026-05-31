@@ -1,0 +1,47 @@
+<!doctype html><html><head><meta charset='utf-8'><title>CardioTwin-AI v3.4.7 PTB-XL Failure-case Review</title><style>body{font-family:Arial,sans-serif;margin:32px;line-height:1.45}.warning{padding:12px;background:#fff7ed;border-left:4px solid #f97316}.card{border:1px solid #ddd;border-radius:12px;padding:14px;margin:12px 0}table{border-collapse:collapse;width:100%;font-size:12px}th,td{border:1px solid #ddd;padding:6px}th{background:#f8fafc}pre{background:#f8fafc;padding:12px;overflow-x:auto}</style></head><body><h1>CardioTwin-AI v3.4.7 PTB-XL Failure-case Review Addendum</h1><div class='warning'>Retrospective label-level failure review only. Not final diagnosis.</div><div class='card'><h2>Policy Comparison</h2><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>policy</th>
+      <th>total_label_events</th>
+      <th>failure_events</th>
+      <th>tp</th>
+      <th>tn</th>
+      <th>fp</th>
+      <th>fn</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>fold9_best_f1</td>
+      <td>10790</td>
+      <td>1665</td>
+      <td>2109</td>
+      <td>7016</td>
+      <td>982</td>
+      <td>683</td>
+    </tr>
+    <tr>
+      <td>fold9_sensitivity90</td>
+      <td>10790</td>
+      <td>2910</td>
+      <td>2487</td>
+      <td>5393</td>
+      <td>2605</td>
+      <td>305</td>
+    </tr>
+    <tr>
+      <td>runtime_screening</td>
+      <td>10790</td>
+      <td>3537</td>
+      <td>2549</td>
+      <td>4704</td>
+      <td>3294</td>
+      <td>243</td>
+    </tr>
+  </tbody>
+</table></div><div class='card'><h2>Runtime to Best-F1 Delta</h2><pre>{
+  "fp_reduction": 2312,
+  "fn_change": 440,
+  "failure_event_reduction": 1872,
+  "specificity_shift_note": "Positive fp_reduction means fold9_best_f1 reduced false positives compared with runtime screening."
+}</pre></div><div class='card'><h2>Claim Boundary</h2><p>Failure-case review is label-level retrospective analysis on PTB-XL fold 10. It identifies cases for doctor review but is not final diagnosis and not clinical deployment.</p></div></body></html>

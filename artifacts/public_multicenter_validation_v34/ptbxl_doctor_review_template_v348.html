@@ -1,0 +1,2384 @@
+<!doctype html><html><head><meta charset='utf-8'><title>CardioTwin-AI v3.4.8 PTB-XL Doctor-review Template</title><style>body{font-family:Arial,sans-serif;margin:32px;line-height:1.45}.warning{padding:12px;background:#fff7ed;border-left:4px solid #f97316}.card{border:1px solid #ddd;border-radius:12px;padding:14px;margin:12px 0}table{border-collapse:collapse;width:100%;font-size:12px}th,td{border:1px solid #ddd;padding:6px}th{background:#f8fafc}pre{background:#f8fafc;padding:12px;overflow-x:auto}</style></head><body><h1>CardioTwin-AI v3.4.8 PTB-XL Doctor-review Template</h1><div class='warning'>Structured expert-review template only. Not clinical diagnosis.</div><div class='card'><h2>Summary</h2><pre>{
+  "project": "CardioTwin-AI",
+  "version": "v3.4.8 PTB-XL doctor-review template addendum",
+  "created_at_utc": "2026-05-31T11:52:47.493720+00:00",
+  "source_failure_review": "artifacts/public_multicenter_validation_v34/ptbxl_failure_case_review_summary_v347.json",
+  "source_failure_review_sha256": "53255abdeb373ea0014cb2fdaadce286f2244d18dc570e56ffb0dd53df6589d1",
+  "review_cases_total": 400,
+  "bucket_counts": {
+    "Fold-9 best-F1 top false negatives": 100,
+    "Runtime screening top false negatives": 100,
+    "Runtime screening top false positives": 100,
+    "Fold-9 best-F1 top false positives": 100
+  },
+  "event_counts": {
+    "FN": 200,
+    "FP": 200
+  },
+  "label_counts": {
+    "MI": 123,
+    "CD": 109,
+    "STTC": 101,
+    "NORM": 36,
+    "HYP": 31
+  },
+  "outputs": {
+    "template_csv": "artifacts/public_multicenter_validation_v34/ptbxl_doctor_review_template_v348.csv",
+    "casebook_md": "artifacts/public_multicenter_validation_v34/PTBXL_DOCTOR_REVIEW_CASEBOOK_v348.md",
+    "instructions_md": "artifacts/public_multicenter_validation_v34/PTBXL_DOCTOR_REVIEW_INSTRUCTIONS_v348.md",
+    "report_html": "artifacts/public_multicenter_validation_v34/ptbxl_doctor_review_template_v348.html",
+    "summary_json": "artifacts/public_multicenter_validation_v34/ptbxl_doctor_review_template_summary_v348.json"
+  },
+  "claim_boundary": "Doctor-review template only. It does not create clinical adjudication results until qualified reviewers complete the template."
+}</pre></div><div class='card'><h2>Preview</h2><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>review_case_id</th>
+      <th>review_bucket</th>
+      <th>review_policy</th>
+      <th>review_event_type</th>
+      <th>source_id</th>
+      <th>record_id</th>
+      <th>ecg_id</th>
+      <th>patient_id</th>
+      <th>strat_fold</th>
+      <th>label</th>
+      <th>true</th>
+      <th>predicted</th>
+      <th>probability</th>
+      <th>threshold</th>
+      <th>prob_minus_threshold</th>
+      <th>severity_score</th>
+      <th>review_priority</th>
+      <th>metric_labels</th>
+      <th>sqi</th>
+      <th>low_sqi</th>
+      <th>uncertain</th>
+      <th>region</th>
+      <th>positive_labels_runtime</th>
+      <th>abnormal_positive_labels_runtime</th>
+      <th>runtime_hea_path</th>
+      <th>runtime_dat_path</th>
+      <th>reviewer_id</th>
+      <th>review_date</th>
+      <th>ecg_quality_review</th>
+      <th>label_present_by_reviewer</th>
+      <th>reviewer_primary_label</th>
+      <th>reviewer_secondary_labels</th>
+      <th>review_confidence_1_to_5</th>
+      <th>ai_error_category</th>
+      <th>recommended_action</th>
+      <th>needs_second_reviewer</th>
+      <th>reviewer_comments</th>
+      <th>adjudication_status</th>
+      <th>final_adjudicated_label_present</th>
+      <th>final_notes</th>
+      <th>allowed_ecg_quality_values</th>
+      <th>allowed_label_present_values</th>
+      <th>allowed_error_category_values</th>
+      <th>allowed_action_values</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PTBXL-V348-0301</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>7895</td>
+      <td>7895</td>
+      <td>12734.0</td>
+      <td>10</td>
+      <td>MI</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.015212</td>
+      <td>0.630000</td>
+      <td>-0.614788</td>
+      <td>0.614788</td>
+      <td>1.814788</td>
+      <td>MI</td>
+      <td>0.868047</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM</td>
+      <td>NaN</td>
+      <td>data/raw/ptbxl/records500/07000/07895_hr.hea</td>
+      <td>data/raw/ptbxl/records500/07000/07895_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0302</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>377</td>
+      <td>377</td>
+      <td>11498.0</td>
+      <td>10</td>
+      <td>CD</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.014770</td>
+      <td>0.620000</td>
+      <td>-0.605230</td>
+      <td>0.605230</td>
+      <td>1.805230</td>
+      <td>CD</td>
+      <td>0.826125</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM|HYP</td>
+      <td>HYP</td>
+      <td>data/raw/ptbxl/records500/00000/00377_hr.hea</td>
+      <td>data/raw/ptbxl/records500/00000/00377_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0303</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>3248</td>
+      <td>3248</td>
+      <td>12493.0</td>
+      <td>10</td>
+      <td>CD</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.020015</td>
+      <td>0.620000</td>
+      <td>-0.599985</td>
+      <td>0.599985</td>
+      <td>1.799985</td>
+      <td>NORM|CD</td>
+      <td>0.860282</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM</td>
+      <td>NaN</td>
+      <td>data/raw/ptbxl/records500/03000/03248_hr.hea</td>
+      <td>data/raw/ptbxl/records500/03000/03248_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0304</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>378</td>
+      <td>378</td>
+      <td>11498.0</td>
+      <td>10</td>
+      <td>CD</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.030024</td>
+      <td>0.620000</td>
+      <td>-0.589976</td>
+      <td>0.589976</td>
+      <td>1.789976</td>
+      <td>CD</td>
+      <td>0.792689</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM</td>
+      <td>NaN</td>
+      <td>data/raw/ptbxl/records500/00000/00378_hr.hea</td>
+      <td>data/raw/ptbxl/records500/00000/00378_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0305</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>13052</td>
+      <td>13052</td>
+      <td>21775.0</td>
+      <td>10</td>
+      <td>CD</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.033522</td>
+      <td>0.620000</td>
+      <td>-0.586478</td>
+      <td>0.586478</td>
+      <td>1.786478</td>
+      <td>NORM|CD</td>
+      <td>0.849037</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM</td>
+      <td>NaN</td>
+      <td>data/raw/ptbxl/records500/13000/13052_hr.hea</td>
+      <td>data/raw/ptbxl/records500/13000/13052_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0306</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>19081</td>
+      <td>19081</td>
+      <td>12866.0</td>
+      <td>10</td>
+      <td>CD</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.044057</td>
+      <td>0.620000</td>
+      <td>-0.575943</td>
+      <td>0.575943</td>
+      <td>1.775943</td>
+      <td>CD</td>
+      <td>0.817393</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM</td>
+      <td>NaN</td>
+      <td>data/raw/ptbxl/records500/19000/19081_hr.hea</td>
+      <td>data/raw/ptbxl/records500/19000/19081_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0307</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>11406</td>
+      <td>11406</td>
+      <td>20898.0</td>
+      <td>10</td>
+      <td>MI</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.057617</td>
+      <td>0.630000</td>
+      <td>-0.572383</td>
+      <td>0.572383</td>
+      <td>1.772383</td>
+      <td>MI</td>
+      <td>0.812782</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM|CD|HYP</td>
+      <td>CD|HYP</td>
+      <td>data/raw/ptbxl/records500/11000/11406_hr.hea</td>
+      <td>data/raw/ptbxl/records500/11000/11406_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0308</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>3689</td>
+      <td>3689</td>
+      <td>18460.0</td>
+      <td>10</td>
+      <td>MI</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.059638</td>
+      <td>0.630000</td>
+      <td>-0.570362</td>
+      <td>0.570362</td>
+      <td>1.770362</td>
+      <td>MI|STTC</td>
+      <td>0.855634</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>STTC|HYP</td>
+      <td>STTC|HYP</td>
+      <td>data/raw/ptbxl/records500/03000/03689_hr.hea</td>
+      <td>data/raw/ptbxl/records500/03000/03689_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0309</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>17719</td>
+      <td>17719</td>
+      <td>2349.0</td>
+      <td>10</td>
+      <td>MI</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.066406</td>
+      <td>0.630000</td>
+      <td>-0.563594</td>
+      <td>0.563594</td>
+      <td>1.763594</td>
+      <td>MI|CD</td>
+      <td>0.879292</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>CD|HYP</td>
+      <td>CD|HYP</td>
+      <td>data/raw/ptbxl/records500/17000/17719_hr.hea</td>
+      <td>data/raw/ptbxl/records500/17000/17719_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0310</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>6283</td>
+      <td>6283</td>
+      <td>17680.0</td>
+      <td>10</td>
+      <td>MI</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.069428</td>
+      <td>0.630000</td>
+      <td>-0.560572</td>
+      <td>0.560572</td>
+      <td>1.760572</td>
+      <td>MI</td>
+      <td>0.880032</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM|CD</td>
+      <td>CD</td>
+      <td>data/raw/ptbxl/records500/06000/06283_hr.hea</td>
+      <td>data/raw/ptbxl/records500/06000/06283_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0311</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>1447</td>
+      <td>1447</td>
+      <td>13478.0</td>
+      <td>10</td>
+      <td>MI</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.070248</td>
+      <td>0.630000</td>
+      <td>-0.559752</td>
+      <td>0.559752</td>
+      <td>1.759752</td>
+      <td>MI|HYP</td>
+      <td>0.861674</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM</td>
+      <td>NaN</td>
+      <td>data/raw/ptbxl/records500/01000/01447_hr.hea</td>
+      <td>data/raw/ptbxl/records500/01000/01447_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0312</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>11212</td>
+      <td>11212</td>
+      <td>12783.0</td>
+      <td>10</td>
+      <td>MI</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.075558</td>
+      <td>0.630000</td>
+      <td>-0.554442</td>
+      <td>0.554442</td>
+      <td>1.754442</td>
+      <td>MI</td>
+      <td>0.890278</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM|CD|HYP</td>
+      <td>CD|HYP</td>
+      <td>data/raw/ptbxl/records500/11000/11212_hr.hea</td>
+      <td>data/raw/ptbxl/records500/11000/11212_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0313</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>3600</td>
+      <td>3600</td>
+      <td>16869.0</td>
+      <td>10</td>
+      <td>MI</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.076515</td>
+      <td>0.630000</td>
+      <td>-0.553485</td>
+      <td>0.553485</td>
+      <td>1.753485</td>
+      <td>MI</td>
+      <td>0.830470</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM</td>
+      <td>NaN</td>
+      <td>data/raw/ptbxl/records500/03000/03600_hr.hea</td>
+      <td>data/raw/ptbxl/records500/03000/03600_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0314</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>13819</td>
+      <td>13819</td>
+      <td>21338.0</td>
+      <td>10</td>
+      <td>MI</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.079951</td>
+      <td>0.630000</td>
+      <td>-0.550049</td>
+      <td>0.550049</td>
+      <td>1.750049</td>
+      <td>MI</td>
+      <td>0.834498</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM|CD|HYP</td>
+      <td>CD|HYP</td>
+      <td>data/raw/ptbxl/records500/13000/13819_hr.hea</td>
+      <td>data/raw/ptbxl/records500/13000/13819_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0315</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>17482</td>
+      <td>17482</td>
+      <td>8023.0</td>
+      <td>10</td>
+      <td>CD</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.073780</td>
+      <td>0.620000</td>
+      <td>-0.546220</td>
+      <td>0.546220</td>
+      <td>1.746220</td>
+      <td>MI|CD</td>
+      <td>0.825052</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>MI</td>
+      <td>MI</td>
+      <td>data/raw/ptbxl/records500/17000/17482_hr.hea</td>
+      <td>data/raw/ptbxl/records500/17000/17482_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0316</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>3629</td>
+      <td>3629</td>
+      <td>9001.0</td>
+      <td>10</td>
+      <td>CD</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.075929</td>
+      <td>0.620000</td>
+      <td>-0.544071</td>
+      <td>0.544071</td>
+      <td>1.744071</td>
+      <td>MI|CD</td>
+      <td>0.852232</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM</td>
+      <td>NaN</td>
+      <td>data/raw/ptbxl/records500/03000/03629_hr.hea</td>
+      <td>data/raw/ptbxl/records500/03000/03629_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0317</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>3579</td>
+      <td>3579</td>
+      <td>16625.0</td>
+      <td>10</td>
+      <td>MI</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.088038</td>
+      <td>0.630000</td>
+      <td>-0.541962</td>
+      <td>0.541962</td>
+      <td>1.741962</td>
+      <td>MI</td>
+      <td>0.852205</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM</td>
+      <td>NaN</td>
+      <td>data/raw/ptbxl/records500/03000/03579_hr.hea</td>
+      <td>data/raw/ptbxl/records500/03000/03579_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0318</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>7747</td>
+      <td>7747</td>
+      <td>17406.0</td>
+      <td>10</td>
+      <td>MI</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.090916</td>
+      <td>0.630000</td>
+      <td>-0.539084</td>
+      <td>0.539084</td>
+      <td>1.739084</td>
+      <td>MI</td>
+      <td>0.733899</td>
+      <td>False</td>
+      <td>False</td>
+      <td>global_conduction</td>
+      <td>NORM|CD|HYP</td>
+      <td>CD|HYP</td>
+      <td>data/raw/ptbxl/records500/07000/07747_hr.hea</td>
+      <td>data/raw/ptbxl/records500/07000/07747_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0319</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>12241</td>
+      <td>12241</td>
+      <td>18299.0</td>
+      <td>10</td>
+      <td>MI</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.093321</td>
+      <td>0.630000</td>
+      <td>-0.536679</td>
+      <td>0.536679</td>
+      <td>1.736679</td>
+      <td>MI|CD</td>
+      <td>0.835528</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM|CD</td>
+      <td>CD</td>
+      <td>data/raw/ptbxl/records500/12000/12241_hr.hea</td>
+      <td>data/raw/ptbxl/records500/12000/12241_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0320</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>2368</td>
+      <td>2368</td>
+      <td>15335.0</td>
+      <td>10</td>
+      <td>CD</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.085060</td>
+      <td>0.620000</td>
+      <td>-0.534940</td>
+      <td>0.534940</td>
+      <td>1.734940</td>
+      <td>NORM|CD</td>
+      <td>0.837559</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM</td>
+      <td>NaN</td>
+      <td>data/raw/ptbxl/records500/02000/02368_hr.hea</td>
+      <td>data/raw/ptbxl/records500/02000/02368_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0321</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>14836</td>
+      <td>14836</td>
+      <td>16126.0</td>
+      <td>10</td>
+      <td>CD</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.085099</td>
+      <td>0.620000</td>
+      <td>-0.534901</td>
+      <td>0.534901</td>
+      <td>1.734901</td>
+      <td>STTC|CD|HYP</td>
+      <td>0.843674</td>
+      <td>False</td>
+      <td>False</td>
+      <td>anterior</td>
+      <td>STTC|HYP</td>
+      <td>STTC|HYP</td>
+      <td>data/raw/ptbxl/records500/14000/14836_hr.hea</td>
+      <td>data/raw/ptbxl/records500/14000/14836_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0322</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>2909</td>
+      <td>2909</td>
+      <td>20468.0</td>
+      <td>10</td>
+      <td>CD</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.090337</td>
+      <td>0.620000</td>
+      <td>-0.529663</td>
+      <td>0.529663</td>
+      <td>1.729663</td>
+      <td>NORM|CD</td>
+      <td>0.866589</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM</td>
+      <td>NaN</td>
+      <td>data/raw/ptbxl/records500/02000/02909_hr.hea</td>
+      <td>data/raw/ptbxl/records500/02000/02909_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0323</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>10660</td>
+      <td>10660</td>
+      <td>13576.0</td>
+      <td>10</td>
+      <td>CD</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.091378</td>
+      <td>0.620000</td>
+      <td>-0.528622</td>
+      <td>0.528622</td>
+      <td>1.728622</td>
+      <td>MI|CD</td>
+      <td>0.827706</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM|MI|HYP</td>
+      <td>MI|HYP</td>
+      <td>data/raw/ptbxl/records500/10000/10660_hr.hea</td>
+      <td>data/raw/ptbxl/records500/10000/10660_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0324</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>3635</td>
+      <td>3635</td>
+      <td>18552.0</td>
+      <td>10</td>
+      <td>CD</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.092347</td>
+      <td>0.620000</td>
+      <td>-0.527653</td>
+      <td>0.527653</td>
+      <td>1.727653</td>
+      <td>NORM|CD</td>
+      <td>0.824968</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM</td>
+      <td>NaN</td>
+      <td>data/raw/ptbxl/records500/03000/03635_hr.hea</td>
+      <td>data/raw/ptbxl/records500/03000/03635_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0325</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>17084</td>
+      <td>17084</td>
+      <td>21723.0</td>
+      <td>10</td>
+      <td>CD</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.092985</td>
+      <td>0.620000</td>
+      <td>-0.527015</td>
+      <td>0.527015</td>
+      <td>1.727015</td>
+      <td>CD</td>
+      <td>0.770146</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM|HYP</td>
+      <td>HYP</td>
+      <td>data/raw/ptbxl/records500/17000/17084_hr.hea</td>
+      <td>data/raw/ptbxl/records500/17000/17084_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0326</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>2606</td>
+      <td>2606</td>
+      <td>13485.0</td>
+      <td>10</td>
+      <td>MI</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.103633</td>
+      <td>0.630000</td>
+      <td>-0.526367</td>
+      <td>0.526367</td>
+      <td>1.726367</td>
+      <td>MI|CD</td>
+      <td>0.855140</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM|CD</td>
+      <td>CD</td>
+      <td>data/raw/ptbxl/records500/02000/02606_hr.hea</td>
+      <td>data/raw/ptbxl/records500/02000/02606_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0327</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>18974</td>
+      <td>18974</td>
+      <td>20916.0</td>
+      <td>10</td>
+      <td>CD</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.094162</td>
+      <td>0.620000</td>
+      <td>-0.525838</td>
+      <td>0.525838</td>
+      <td>1.725838</td>
+      <td>CD</td>
+      <td>0.821658</td>
+      <td>False</td>
+      <td>False</td>
+      <td>hypertrophy_chamber</td>
+      <td>NORM|HYP</td>
+      <td>HYP</td>
+      <td>data/raw/ptbxl/records500/18000/18974_hr.hea</td>
+      <td>data/raw/ptbxl/records500/18000/18974_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0328</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>19461</td>
+      <td>19461</td>
+      <td>13032.0</td>
+      <td>10</td>
+      <td>CD</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.094500</td>
+      <td>0.620000</td>
+      <td>-0.525500</td>
+      <td>0.525500</td>
+      <td>1.725500</td>
+      <td>NORM|CD</td>
+      <td>0.877049</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM</td>
+      <td>NaN</td>
+      <td>data/raw/ptbxl/records500/19000/19461_hr.hea</td>
+      <td>data/raw/ptbxl/records500/19000/19461_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0329</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>478</td>
+      <td>478</td>
+      <td>6312.0</td>
+      <td>10</td>
+      <td>CD</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.097710</td>
+      <td>0.620000</td>
+      <td>-0.522290</td>
+      <td>0.522290</td>
+      <td>1.722290</td>
+      <td>NORM|CD</td>
+      <td>0.892620</td>
+      <td>False</td>
+      <td>False</td>
+      <td>anterior</td>
+      <td>NORM|MI</td>
+      <td>MI</td>
+      <td>data/raw/ptbxl/records500/00000/00478_hr.hea</td>
+      <td>data/raw/ptbxl/records500/00000/00478_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0330</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>17951</td>
+      <td>17951</td>
+      <td>16102.0</td>
+      <td>10</td>
+      <td>MI</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.111867</td>
+      <td>0.630000</td>
+      <td>-0.518133</td>
+      <td>0.518133</td>
+      <td>1.718133</td>
+      <td>MI</td>
+      <td>0.783949</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM|CD</td>
+      <td>CD</td>
+      <td>data/raw/ptbxl/records500/17000/17951_hr.hea</td>
+      <td>data/raw/ptbxl/records500/17000/17951_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0331</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>2736</td>
+      <td>2736</td>
+      <td>11305.0</td>
+      <td>10</td>
+      <td>MI</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.112210</td>
+      <td>0.630000</td>
+      <td>-0.517790</td>
+      <td>0.517790</td>
+      <td>1.717790</td>
+      <td>MI</td>
+      <td>0.890434</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM|STTC</td>
+      <td>STTC</td>
+      <td>data/raw/ptbxl/records500/02000/02736_hr.hea</td>
+      <td>data/raw/ptbxl/records500/02000/02736_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0332</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>8482</td>
+      <td>8482</td>
+      <td>17607.0</td>
+      <td>10</td>
+      <td>CD</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.108545</td>
+      <td>0.620000</td>
+      <td>-0.511455</td>
+      <td>0.511455</td>
+      <td>1.711455</td>
+      <td>CD</td>
+      <td>0.853554</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM|MI|STTC</td>
+      <td>MI|STTC</td>
+      <td>data/raw/ptbxl/records500/08000/08482_hr.hea</td>
+      <td>data/raw/ptbxl/records500/08000/08482_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0333</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>21011</td>
+      <td>21011</td>
+      <td>21218.0</td>
+      <td>10</td>
+      <td>CD</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.109525</td>
+      <td>0.620000</td>
+      <td>-0.510475</td>
+      <td>0.510475</td>
+      <td>1.710475</td>
+      <td>CD</td>
+      <td>0.743465</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM</td>
+      <td>NaN</td>
+      <td>data/raw/ptbxl/records500/21000/21011_hr.hea</td>
+      <td>data/raw/ptbxl/records500/21000/21011_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0334</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>17575</td>
+      <td>17575</td>
+      <td>10617.0</td>
+      <td>10</td>
+      <td>MI</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.119552</td>
+      <td>0.630000</td>
+      <td>-0.510448</td>
+      <td>0.510448</td>
+      <td>1.710448</td>
+      <td>MI</td>
+      <td>0.852894</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM|CD</td>
+      <td>CD</td>
+      <td>data/raw/ptbxl/records500/17000/17575_hr.hea</td>
+      <td>data/raw/ptbxl/records500/17000/17575_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0335</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>15400</td>
+      <td>15400</td>
+      <td>12097.0</td>
+      <td>10</td>
+      <td>MI</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.125949</td>
+      <td>0.630000</td>
+      <td>-0.504051</td>
+      <td>0.504051</td>
+      <td>1.704051</td>
+      <td>MI</td>
+      <td>0.828616</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM|HYP</td>
+      <td>HYP</td>
+      <td>data/raw/ptbxl/records500/15000/15400_hr.hea</td>
+      <td>data/raw/ptbxl/records500/15000/15400_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0336</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>1014</td>
+      <td>1014</td>
+      <td>2901.0</td>
+      <td>10</td>
+      <td>MI</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.126742</td>
+      <td>0.630000</td>
+      <td>-0.503258</td>
+      <td>0.503258</td>
+      <td>1.703258</td>
+      <td>MI|CD</td>
+      <td>0.844819</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>STTC|CD|HYP</td>
+      <td>STTC|CD|HYP</td>
+      <td>data/raw/ptbxl/records500/01000/01014_hr.hea</td>
+      <td>data/raw/ptbxl/records500/01000/01014_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0337</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>5826</td>
+      <td>5826</td>
+      <td>17804.0</td>
+      <td>10</td>
+      <td>MI</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.129029</td>
+      <td>0.630000</td>
+      <td>-0.500971</td>
+      <td>0.500971</td>
+      <td>1.700971</td>
+      <td>MI|CD</td>
+      <td>0.837628</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>CD|HYP</td>
+      <td>CD|HYP</td>
+      <td>data/raw/ptbxl/records500/05000/05826_hr.hea</td>
+      <td>data/raw/ptbxl/records500/05000/05826_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0338</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>5337</td>
+      <td>5337</td>
+      <td>15306.0</td>
+      <td>10</td>
+      <td>CD</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.119377</td>
+      <td>0.620000</td>
+      <td>-0.500623</td>
+      <td>0.500623</td>
+      <td>1.700623</td>
+      <td>CD</td>
+      <td>0.848197</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM</td>
+      <td>NaN</td>
+      <td>data/raw/ptbxl/records500/05000/05337_hr.hea</td>
+      <td>data/raw/ptbxl/records500/05000/05337_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0339</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>15689</td>
+      <td>15689</td>
+      <td>3779.0</td>
+      <td>10</td>
+      <td>CD</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.126324</td>
+      <td>0.620000</td>
+      <td>-0.493676</td>
+      <td>0.493676</td>
+      <td>1.693676</td>
+      <td>NORM|CD</td>
+      <td>0.909017</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM</td>
+      <td>NaN</td>
+      <td>data/raw/ptbxl/records500/15000/15689_hr.hea</td>
+      <td>data/raw/ptbxl/records500/15000/15689_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0340</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>20369</td>
+      <td>20369</td>
+      <td>15739.0</td>
+      <td>10</td>
+      <td>HYP</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.005720</td>
+      <td>0.596254</td>
+      <td>-0.590534</td>
+      <td>0.590534</td>
+      <td>1.690534</td>
+      <td>HYP</td>
+      <td>0.872818</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM</td>
+      <td>NaN</td>
+      <td>data/raw/ptbxl/records500/20000/20369_hr.hea</td>
+      <td>data/raw/ptbxl/records500/20000/20369_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0341</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>658</td>
+      <td>658</td>
+      <td>9050.0</td>
+      <td>10</td>
+      <td>CD</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.131566</td>
+      <td>0.620000</td>
+      <td>-0.488434</td>
+      <td>0.488434</td>
+      <td>1.688434</td>
+      <td>CD</td>
+      <td>0.836115</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM|CD|HYP</td>
+      <td>CD|HYP</td>
+      <td>data/raw/ptbxl/records500/00000/00658_hr.hea</td>
+      <td>data/raw/ptbxl/records500/00000/00658_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0101</td>
+      <td>Runtime screening top false negatives</td>
+      <td>runtime_screening</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>7895</td>
+      <td>7895</td>
+      <td>12734.0</td>
+      <td>10</td>
+      <td>MI</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.015212</td>
+      <td>0.500000</td>
+      <td>-0.484788</td>
+      <td>0.484788</td>
+      <td>1.684788</td>
+      <td>MI</td>
+      <td>0.868047</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM</td>
+      <td>NaN</td>
+      <td>data/raw/ptbxl/records500/07000/07895_hr.hea</td>
+      <td>data/raw/ptbxl/records500/07000/07895_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0342</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>799</td>
+      <td>799</td>
+      <td>18739.0</td>
+      <td>10</td>
+      <td>MI</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.147761</td>
+      <td>0.630000</td>
+      <td>-0.482239</td>
+      <td>0.482239</td>
+      <td>1.682239</td>
+      <td>MI</td>
+      <td>0.830832</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM</td>
+      <td>NaN</td>
+      <td>data/raw/ptbxl/records500/00000/00799_hr.hea</td>
+      <td>data/raw/ptbxl/records500/00000/00799_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0343</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>1447</td>
+      <td>1447</td>
+      <td>13478.0</td>
+      <td>10</td>
+      <td>HYP</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.017363</td>
+      <td>0.596254</td>
+      <td>-0.578890</td>
+      <td>0.578890</td>
+      <td>1.678890</td>
+      <td>MI|HYP</td>
+      <td>0.861674</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM</td>
+      <td>NaN</td>
+      <td>data/raw/ptbxl/records500/01000/01447_hr.hea</td>
+      <td>data/raw/ptbxl/records500/01000/01447_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0344</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>1785</td>
+      <td>1785</td>
+      <td>13570.0</td>
+      <td>10</td>
+      <td>HYP</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.019381</td>
+      <td>0.596254</td>
+      <td>-0.576873</td>
+      <td>0.576873</td>
+      <td>1.676873</td>
+      <td>HYP</td>
+      <td>0.815196</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM</td>
+      <td>NaN</td>
+      <td>data/raw/ptbxl/records500/01000/01785_hr.hea</td>
+      <td>data/raw/ptbxl/records500/01000/01785_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0345</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>9458</td>
+      <td>9458</td>
+      <td>9963.0</td>
+      <td>10</td>
+      <td>CD</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.145781</td>
+      <td>0.620000</td>
+      <td>-0.474219</td>
+      <td>0.474219</td>
+      <td>1.674219</td>
+      <td>CD</td>
+      <td>0.906865</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>STTC|CD|HYP</td>
+      <td>STTC|CD|HYP</td>
+      <td>data/raw/ptbxl/records500/09000/09458_hr.hea</td>
+      <td>data/raw/ptbxl/records500/09000/09458_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0346</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>4167</td>
+      <td>4167</td>
+      <td>21197.0</td>
+      <td>10</td>
+      <td>HYP</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.026092</td>
+      <td>0.596254</td>
+      <td>-0.570162</td>
+      <td>0.570162</td>
+      <td>1.670162</td>
+      <td>NORM|CD|HYP</td>
+      <td>0.911408</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM|CD</td>
+      <td>CD</td>
+      <td>data/raw/ptbxl/records500/04000/04167_hr.hea</td>
+      <td>data/raw/ptbxl/records500/04000/04167_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0347</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>11872</td>
+      <td>11872</td>
+      <td>15943.0</td>
+      <td>10</td>
+      <td>HYP</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.027511</td>
+      <td>0.596254</td>
+      <td>-0.568743</td>
+      <td>0.568743</td>
+      <td>1.668743</td>
+      <td>MI|HYP</td>
+      <td>0.887168</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>NORM|CD</td>
+      <td>CD</td>
+      <td>data/raw/ptbxl/records500/11000/11872_hr.hea</td>
+      <td>data/raw/ptbxl/records500/11000/11872_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0348</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>9765</td>
+      <td>9765</td>
+      <td>11027.0</td>
+      <td>10</td>
+      <td>CD</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.154080</td>
+      <td>0.620000</td>
+      <td>-0.465920</td>
+      <td>0.465920</td>
+      <td>1.665920</td>
+      <td>MI|CD</td>
+      <td>0.862159</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>MI|STTC|CD|HYP</td>
+      <td>MI|STTC|CD|HYP</td>
+      <td>data/raw/ptbxl/records500/09000/09765_hr.hea</td>
+      <td>data/raw/ptbxl/records500/09000/09765_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+    <tr>
+      <td>PTBXL-V348-0349</td>
+      <td>Fold-9 best-F1 top false negatives</td>
+      <td>fold9_best_f1</td>
+      <td>FN</td>
+      <td>ptbxl_standalone</td>
+      <td>13227</td>
+      <td>13227</td>
+      <td>15567.0</td>
+      <td>10</td>
+      <td>MI</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.165712</td>
+      <td>0.630000</td>
+      <td>-0.464288</td>
+      <td>0.464288</td>
+      <td>1.664288</td>
+      <td>MI|STTC</td>
+      <td>0.847214</td>
+      <td>False</td>
+      <td>False</td>
+      <td>uncertain</td>
+      <td>STTC|HYP</td>
+      <td>STTC|HYP</td>
+      <td>data/raw/ptbxl/records500/13000/13227_hr.hea</td>
+      <td>data/raw/ptbxl/records500/13000/13227_hr.dat</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>good | noisy | lead_issue | artifact | unreadable | uncertain</td>
+      <td>yes | no | uncertain | not_applicable</td>
+      <td>true_model_error | label_mapping_issue | borderline_case | low_signal_quality | multi_label_overlap | threshold_tradeoff | needs_clinical_context</td>
+      <td>accept_ai_flag | reject_ai_flag | adjust_threshold_later | add_to_training_review_pool | second_reviewer | exclude_low_quality</td>
+    </tr>
+  </tbody>
+</table></div></body></html>

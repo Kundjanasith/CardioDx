@@ -1,0 +1,93 @@
+{
+  "project": "CardioTwin-AI",
+  "version": "v3.4.5 PTB-XL metrics and source-aware calibration",
+  "created_at_utc": "2026-05-31T11:36:20.063050+00:00",
+  "fold9_prediction_csv": "artifacts/public_multicenter_validation_v34/ptbxl_fold9_calibration_inference_predictions_v345.csv",
+  "fold9_prediction_sha256": "20982618778db903b30e70613f6ea5b1efbf13f3c4da845d0e1f5abe9cfb1eee",
+  "fold10_prediction_csv": "artifacts/public_multicenter_validation_v34/ptbxl_fold10_locked_inference_predictions_v344.csv",
+  "fold10_prediction_sha256": "79676d2e440f033fe03220ee226d21eace5f6dfca67071b79d2e0186da6c49e2",
+  "fold9_ok_rows": 2146,
+  "fold10_ok_rows": 2158,
+  "outputs": {
+    "metrics_csv": "artifacts/public_multicenter_validation_v34/ptbxl_fold10_metrics_and_calibration_v345.csv",
+    "threshold_curves_csv": "artifacts/public_multicenter_validation_v34/ptbxl_fold9_threshold_curves_v345.csv",
+    "threshold_picks_json": "artifacts/public_multicenter_validation_v34/ptbxl_fold9_threshold_picks_v345.json",
+    "summary_json": "artifacts/public_multicenter_validation_v34/ptbxl_metrics_calibration_summary_v345.json",
+    "report_md": "artifacts/public_multicenter_validation_v34/PTBXL_METRICS_CALIBRATION_REPORT_v345.md",
+    "report_html": "artifacts/public_multicenter_validation_v34/ptbxl_metrics_calibration_report_v345.html"
+  },
+  "split_summaries": {
+    "fold10_apply_fold9_best_f1": {
+      "split": "fold10_apply_fold9_best_f1",
+      "macro_auroc": 0.8840655307419931,
+      "macro_auprc": 0.7313501038399431,
+      "macro_f1": 0.6773663026278848,
+      "macro_precision": 0.6446362519975846,
+      "macro_sensitivity": 0.7138557948454038,
+      "macro_specificity": 0.8715140979874414,
+      "macro_accuracy": 0.845690454124189,
+      "labels_with_valid_auroc": 5
+    },
+    "fold10_apply_fold9_best_youden": {
+      "split": "fold10_apply_fold9_best_youden",
+      "macro_auroc": 0.8840655307419931,
+      "macro_auprc": 0.7313501038399431,
+      "macro_f1": 0.6565193768089721,
+      "macro_precision": 0.5797313808155391,
+      "macro_sensitivity": 0.8002203958930666,
+      "macro_specificity": 0.8071044902883022,
+      "macro_accuracy": 0.8040778498609823,
+      "labels_with_valid_auroc": 5
+    },
+    "fold10_apply_fold9_sensitivity90_max_specificity": {
+      "split": "fold10_apply_fold9_sensitivity90_max_specificity",
+      "macro_auroc": 0.8840655307419931,
+      "macro_auprc": 0.7313501038399431,
+      "macro_f1": 0.6139544436862824,
+      "macro_precision": 0.4913253202746171,
+      "macro_sensitivity": 0.8926916394625979,
+      "macro_specificity": 0.6829833327639918,
+      "macro_accuracy": 0.7303058387395737,
+      "labels_with_valid_auroc": 5
+    },
+    "fold10_apply_fold9_sensitivity95_max_specificity": {
+      "split": "fold10_apply_fold9_sensitivity95_max_specificity",
+      "macro_auroc": 0.8840655307419931,
+      "macro_auprc": 0.7313501038399431,
+      "macro_f1": 0.5561850147060081,
+      "macro_precision": 0.41471653264446956,
+      "macro_sensitivity": 0.9516459398008996,
+      "macro_specificity": 0.5258403780798032,
+      "macro_accuracy": 0.6251158480074144,
+      "labels_with_valid_auroc": 5
+    },
+    "fold10_runtime_screening": {
+      "split": "fold10_runtime_screening",
+      "macro_auroc": 0.8840655307419931,
+      "macro_auprc": 0.7313501038399431,
+      "macro_f1": 0.5814457423805688,
+      "macro_precision": 0.45506807017830864,
+      "macro_sensitivity": 0.9106315673518864,
+      "macro_specificity": 0.5973912412279443,
+      "macro_accuracy": 0.6721964782205746,
+      "labels_with_valid_auroc": 5
+    },
+    "fold9_runtime_screening": {
+      "split": "fold9_runtime_screening",
+      "macro_auroc": 0.8857478656133132,
+      "macro_auprc": 0.7271438204468488,
+      "macro_f1": 0.5860522621911997,
+      "macro_precision": 0.4597555270714354,
+      "macro_sensitivity": 0.9110521964454528,
+      "macro_specificity": 0.6005317554664353,
+      "macro_accuracy": 0.6751164958061511,
+      "labels_with_valid_auroc": 5
+    }
+  },
+  "threshold_policy": {
+    "runtime_screening": "Frozen runtime thresholds from v3.0.4.1 profile=screening.",
+    "fold9_calibration": "Analytical thresholds derived only from PTB-XL fold 9 and applied to fold 10.",
+    "fold10_locked_rule": "Fold 10 is not used to tune thresholds."
+  },
+  "claim_boundary": "PTB-XL v3.4.5 is a source-controlled benchmark and calibration analysis. Not prospective clinical validation and not final diagnosis."
+}

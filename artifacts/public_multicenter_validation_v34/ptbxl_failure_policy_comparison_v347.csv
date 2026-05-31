@@ -1,0 +1,4 @@
+policy,total_label_events,failure_events,tp,tn,fp,fn
+fold9_best_f1,10790,1665,2109,7016,982,683
+fold9_sensitivity90,10790,2910,2487,5393,2605,305
+runtime_screening,10790,3537,2549,4704,3294,243

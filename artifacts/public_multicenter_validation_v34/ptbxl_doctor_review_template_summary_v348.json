@@ -1,0 +1,33 @@
+{
+  "project": "CardioTwin-AI",
+  "version": "v3.4.8 PTB-XL doctor-review template addendum",
+  "created_at_utc": "2026-05-31T11:52:47.493720+00:00",
+  "source_failure_review": "artifacts/public_multicenter_validation_v34/ptbxl_failure_case_review_summary_v347.json",
+  "source_failure_review_sha256": "53255abdeb373ea0014cb2fdaadce286f2244d18dc570e56ffb0dd53df6589d1",
+  "review_cases_total": 400,
+  "bucket_counts": {
+    "Fold-9 best-F1 top false negatives": 100,
+    "Runtime screening top false negatives": 100,
+    "Runtime screening top false positives": 100,
+    "Fold-9 best-F1 top false positives": 100
+  },
+  "event_counts": {
+    "FN": 200,
+    "FP": 200
+  },
+  "label_counts": {
+    "MI": 123,
+    "CD": 109,
+    "STTC": 101,
+    "NORM": 36,
+    "HYP": 31
+  },
+  "outputs": {
+    "template_csv": "artifacts/public_multicenter_validation_v34/ptbxl_doctor_review_template_v348.csv",
+    "casebook_md": "artifacts/public_multicenter_validation_v34/PTBXL_DOCTOR_REVIEW_CASEBOOK_v348.md",
+    "instructions_md": "artifacts/public_multicenter_validation_v34/PTBXL_DOCTOR_REVIEW_INSTRUCTIONS_v348.md",
+    "report_html": "artifacts/public_multicenter_validation_v34/ptbxl_doctor_review_template_v348.html",
+    "summary_json": "artifacts/public_multicenter_validation_v34/ptbxl_doctor_review_template_summary_v348.json"
+  },
+  "claim_boundary": "Doctor-review template only. It does not create clinical adjudication results until qualified reviewers complete the template."
+}

@@ -1,0 +1,122 @@
+{
+  "project": "CardioTwin-AI",
+  "version": "v3.4.6 PTB-XL source-aware calibration addendum",
+  "created_at_utc": "2026-05-31T11:38:09.001234+00:00",
+  "scope": "PTB-XL standalone source-controlled benchmark addendum to frozen v3.3.5 public validation release.",
+  "ptbxl_readiness": {
+    "readiness": "ready_candidate",
+    "metadata_rows": 21799,
+    "hr_waveform_ready_rows": 21799,
+    "label_mapped_rows": 21388,
+    "label_counts": {
+      "NORM": 9514,
+      "MI": 5469,
+      "STTC": 5235,
+      "CD": 4898,
+      "HYP": 2649
+    }
+  },
+  "cohorts": {
+    "fold9_calibration": {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_calibration_fold9_cohort_v342.csv",
+      "rows": 2146,
+      "unique_patients": 1917,
+      "label_counts": {
+        "NORM": 955,
+        "MI": 540,
+        "STTC": 528,
+        "CD": 495,
+        "HYP": 268
+      },
+      "sha256": "1b947202384736f0e22a2f15a34468fe88c1c2324fd5946cff6f0c5ed9f23d42"
+    },
+    "fold10_locked_eval": {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_locked_eval_fold10_cohort_v342.csv",
+      "rows": 2158,
+      "unique_patients": 1877,
+      "label_counts": {
+        "NORM": 963,
+        "MI": 550,
+        "STTC": 521,
+        "CD": 496,
+        "HYP": 262
+      },
+      "sha256": "3e28a358b11bd1d68b8a2eec85b7ae85a018f761939d8c66057366bff4ac9596"
+    },
+    "fold10_balanced_smoke_subset": {
+      "path": "artifacts/public_multicenter_validation_v34/ptbxl_balanced_smoke_subset_v342.csv",
+      "rows": 235,
+      "unique_patients": 218,
+      "label_counts": {
+        "NORM": 66,
+        "MI": 67,
+        "STTC": 78,
+        "CD": 66,
+        "HYP": 60
+      },
+      "sha256": "c1633916e4bd9d446656fe7cb661a78cd9e7873dbe98bc6a64edb175d94f1c04"
+    }
+  },
+  "inference": {
+    "smoke": {
+      "records_requested": 235,
+      "ok_count": 235,
+      "error_count": 0,
+      "status": "pass"
+    },
+    "fold9_calibration": {
+      "records_requested": 2146,
+      "ok_count": 2146,
+      "error_count": 0,
+      "status": "pass"
+    },
+    "fold10_locked_eval": {
+      "records_requested": 2158,
+      "ok_count": 2158,
+      "error_count": 0,
+      "status": "pass"
+    }
+  },
+  "key_metrics": {
+    "fold10_runtime_screening": {
+      "split": "fold10_runtime_screening",
+      "macro_auroc": 0.8840655307419931,
+      "macro_auprc": 0.7313501038399431,
+      "macro_f1": 0.5814457423805688,
+      "macro_precision": 0.45506807017830864,
+      "macro_sensitivity": 0.9106315673518864,
+      "macro_specificity": 0.5973912412279443,
+      "macro_accuracy": 0.6721964782205746,
+      "labels_with_valid_auroc": 5
+    },
+    "fold10_apply_fold9_best_f1": {
+      "split": "fold10_apply_fold9_best_f1",
+      "macro_auroc": 0.8840655307419931,
+      "macro_auprc": 0.7313501038399431,
+      "macro_f1": 0.6773663026278848,
+      "macro_precision": 0.6446362519975846,
+      "macro_sensitivity": 0.7138557948454038,
+      "macro_specificity": 0.8715140979874414,
+      "macro_accuracy": 0.845690454124189,
+      "labels_with_valid_auroc": 5
+    },
+    "fold10_apply_fold9_sensitivity90_max_specificity": {
+      "split": "fold10_apply_fold9_sensitivity90_max_specificity",
+      "macro_auroc": 0.8840655307419931,
+      "macro_auprc": 0.7313501038399431,
+      "macro_f1": 0.6139544436862824,
+      "macro_precision": 0.4913253202746171,
+      "macro_sensitivity": 0.8926916394625979,
+      "macro_specificity": 0.6829833327639918,
+      "macro_accuracy": 0.7303058387395737,
+      "labels_with_valid_auroc": 5
+    }
+  },
+  "interpretation": {
+    "main_result": "PTB-XL fold 10 achieved strong discrimination under the frozen runtime, with macro AUROC 0.8841 and macro AUPRC 0.7314.",
+    "calibration_result": "Fold-9-derived best-F1 thresholds improved fold-10 macro F1, precision, specificity, and accuracy compared with runtime screening thresholds, while reducing sensitivity as expected.",
+    "screening_result": "Runtime screening thresholds preserved high sensitivity but produced more false positives, consistent with screening-mode behavior."
+  },
+  "safe_claim": "CardioTwin-AI v3.4 adds PTB-XL source-controlled benchmarking with fold 9 used for calibration and fold 10 used as locked evaluation. The frozen runtime showed strong fold-10 discrimination, and fold-9-derived thresholds improved specificity and F1 without retraining.",
+  "claim_boundary": "PTB-XL v3.4.6 is a source-controlled benchmark and calibration addendum. It is not prospective clinical validation, not final diagnosis, and not clinical deployment."
+}
