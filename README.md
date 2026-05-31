@@ -84,6 +84,18 @@ Open:
 - Release pack: artifacts/release_rc1/cardiotwin_v3_3_5_final_public_multicenter_validation_pack.zip
 - Release manifest: artifacts/release_rc1/cardiotwin_v3_3_5_final_public_multicenter_validation_manifest.json
 
+## GitHub Pages
+
+This repository now includes a GitHub Pages workflow that publishes a static site from the public
+validation artifacts.
+
+- Workflow: `.github/workflows/deploy-pages.yml`
+- Build script: `scripts/build_github_pages.py`
+- Published landing page source: `pages/index.html`
+
+Important: GitHub Pages can host the static validation report and release files, but it cannot run
+the Streamlit dashboards or the FastAPI inference service in this repository.
+
 ## What This System Can Do Now
 
 - Load and analyze 12-lead ECG records.

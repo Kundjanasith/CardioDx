@@ -35,3 +35,6 @@ secrets*
 # Avoid accidental huge generated temporary files
 artifacts/**/*.tmp
 artifacts/**/*.part
+
+# GitHub Pages build output
+site/

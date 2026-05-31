@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CardioTwin-AI Public Validation v3.3.5</title>
+    <style>
+      :root {
+        --bg: #f5f1e8;
+        --panel: rgba(255, 252, 245, 0.9);
+        --ink: #1f2933;
+        --muted: #52606d;
+        --line: rgba(31, 41, 51, 0.14);
+        --accent: #b6482c;
+        --accent-dark: #7f2f1d;
+        --accent-soft: #f7d7cd;
+        --shadow: 0 24px 60px rgba(63, 40, 24, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top left, rgba(182, 72, 44, 0.15), transparent 28rem),
+          linear-gradient(180deg, #f8f3ea 0%, var(--bg) 100%);
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .shell {
+        width: min(1100px, calc(100% - 2rem));
+        margin: 0 auto;
+        padding: 2rem 0 4rem;
+      }
+
+      .hero {
+        padding: 4rem 0 2rem;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        padding: 0.35rem 0.7rem;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.6);
+        font-size: 0.82rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 1rem 0 0.8rem;
+        max-width: 12ch;
+        font-size: clamp(2.8rem, 6vw, 5.8rem);
+        line-height: 0.95;
+        font-weight: 600;
+      }
+
+      .lede {
+        max-width: 52rem;
+        font-size: 1.15rem;
+        line-height: 1.65;
+        color: var(--muted);
+      }
+
+      .notice {
+        margin-top: 1.5rem;
+        max-width: 54rem;
+        padding: 1rem 1.1rem;
+        border-left: 4px solid var(--accent);
+        background: var(--accent-soft);
+        box-shadow: var(--shadow);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
+        margin: 2.5rem 0;
+      }
+
+      .card,
+      .download {
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: var(--panel);
+        box-shadow: var(--shadow);
+      }
+
+      .card {
+        padding: 1.25rem;
+      }
+
+      .metric {
+        display: block;
+        font-size: 2rem;
+        line-height: 1;
+        color: var(--accent-dark);
+      }
+
+      .label {
+        display: block;
+        margin-top: 0.45rem;
+        color: var(--muted);
+      }
+
+      h2 {
+        margin: 0 0 1rem;
+        font-size: 1.7rem;
+      }
+
+      .section {
+        margin-top: 2.5rem;
+      }
+
+      .downloads {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+      }
+
+      .download {
+        padding: 1.2rem;
+        text-decoration: none;
+        transition: transform 180ms ease, border-color 180ms ease;
+      }
+
+      .download:hover {
+        transform: translateY(-2px);
+        border-color: rgba(182, 72, 44, 0.45);
+      }
+
+      .download strong {
+        display: block;
+        margin-bottom: 0.45rem;
+        font-size: 1.08rem;
+      }
+
+      .download span {
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .footer {
+        margin-top: 3rem;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      code {
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+        font-size: 0.92em;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <span class="eyebrow">CardioTwin-AI • Public Release v3.3.5</span>
+        <h1>Public multicenter validation evidence</h1>
+        <p class="lede">
+          This GitHub Pages site publishes the static research release for CardioTwin-AI, including
+          the final validation report, summary tables, claim boundary notes, and release bundle.
+        </p>
+        <div class="notice">
+          Research-use public validation evidence only. The live Python application is not deployed
+          here because GitHub Pages serves static files only and cannot run Streamlit or FastAPI.
+        </div>
+      </section>
+
+      <section class="grid" aria-label="Key metrics">
+        <article class="card">
+          <span class="metric">3,222</span>
+          <span class="label">Locked cohort ECG records</span>
+        </article>
+        <article class="card">
+          <span class="metric">4</span>
+          <span class="label">Public data sources</span>
+        </article>
+        <article class="card">
+          <span class="metric">0.9164</span>
+          <span class="label">PTB macro AUROC</span>
+        </article>
+        <article class="card">
+          <span class="metric">319.84s</span>
+          <span class="label">Frozen runtime evaluation time</span>
+        </article>
+      </section>
+
+      <section class="section">
+        <h2>Published files</h2>
+        <div class="downloads">
+          <a class="download" href="./reports/public_multicenter_validation_final_report_v335.html">
+            <strong>Final HTML report</strong>
+            <span>Self-contained validation report for direct browser reading.</span>
+          </a>
+          <a class="download" href="./reports/PUBLIC_MULTICENTER_VALIDATION_FINAL_REPORT_v335.md">
+            <strong>Final Markdown report</strong>
+            <span>Source report in Markdown format.</span>
+          </a>
+          <a class="download" href="./reports/PUBLIC_CLAIM_BOUNDARY_AND_NEXT_STEPS_v335.md">
+            <strong>Claim boundary and next steps</strong>
+            <span>Public-safe positioning, cautions, and roadmap notes.</span>
+          </a>
+          <a class="download" href="./reports/PUBLIC_PAPER_READY_RESULTS_TABLE_v335.csv">
+            <strong>Paper-ready results table</strong>
+            <span>CSV export for reported summary metrics.</span>
+          </a>
+          <a class="download" href="./reports/public_multicenter_validation_final_summary_v335.json">
+            <strong>Summary JSON</strong>
+            <span>Machine-readable report summary.</span>
+          </a>
+          <a class="download" href="./reports/doctor_in_the_loop_review_template_v334.csv">
+            <strong>Doctor review template</strong>
+            <span>CSV template for clinician-in-the-loop review workflows.</span>
+          </a>
+          <a class="download" href="./release/cardiotwin_v3_3_5_final_public_multicenter_validation_pack.zip">
+            <strong>Release bundle ZIP</strong>
+            <span>Frozen public release pack as distributed in the repository artifacts.</span>
+          </a>
+          <a class="download" href="./release/cardiotwin_v3_3_5_final_public_multicenter_validation_manifest.json">
+            <strong>Release manifest</strong>
+            <span>Manifest for the packaged validation release.</span>
+          </a>
+        </div>
+      </section>
+
+      <p class="footer">
+        Repository runtime apps still require Python execution. For interactive deployment, use a
+        Python-capable host such as Streamlit Community Cloud, Render, or Hugging Face Spaces.
+      </p>
+    </main>
+  </body>
+</html>
