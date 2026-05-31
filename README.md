@@ -96,6 +96,28 @@ validation artifacts.
 Important: GitHub Pages can host the static validation report and release files, but it cannot run
 the Streamlit dashboards or the FastAPI inference service in this repository.
 
+## Streamlit Community Cloud
+
+For a live hosted Python app, use Streamlit Community Cloud instead of GitHub Pages.
+
+- App entrypoint: `streamlit_app.py`
+- Python runtime hint: `runtime.txt`
+- Bundled model used by the hosted app: `artifacts/models/inceptiontime_v21_safety.pt`
+
+Deployment settings:
+
+1. Repository: this GitHub repo
+2. Branch: `main`
+3. Main file path: `streamlit_app.py`
+
+The hosted app is upload-based and does not require local dataset paths. It accepts:
+
+- 12-lead CSV uploads
+- processed NPZ uploads
+- WFDB `.hea` + `.mat` upload pairs
+
+It also exposes downloadable synthetic demo CSV and NPZ inputs for quick smoke testing.
+
 ## What This System Can Do Now
 
 - Load and analyze 12-lead ECG records.
